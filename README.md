@@ -56,6 +56,7 @@ compatible with Github Flavored Markdown.
     - [How do I minimize the cold start latencies?](#how-do-i-minimize-the-cold-start-latencies)
     - [How can I tell if a request was a “cold start”?](#how-can-i-tell-if-a-request-was-a-cold-start)
   - [Serving Traffic](#serving-traffic)
+    - [What's the maximum request execution time limit?](#whats-the-maximum-request-execution-time-limit)
     - [Does my service get a domain name on Cloud Run?](#does-my-service-get-a-domain-name-on-cloud-run)
     - [Are all Cloud Run services publicly accessible?](#are-all-cloud-run-services-publicly-accessible)
     - [Does my application get multiple requests concurrently?](#does-my-application-get-multiple-requests-concurrently)
@@ -66,12 +67,12 @@ compatible with Github Flavored Markdown.
     - [How can I limit the total number of instances for my application?](#how-can-i-limit-the-total-number-of-instances-for-my-application)
     - [What’s the upper scaling limit for Cloud Run?](#whats-the-upper-scaling-limit-for-cloud-run)
   - [Runtime](#runtime)
-    - [What's the request execution time limit?](#whats-the-request-execution-time-limit)
     - [Which operating system Cloud Run applications run on?](#which-operating-system-cloud-run-applications-run-on)
-    - [Which system calls are supported?](#which-system-calls-are-supported)
-    - [Which excutable ABIs are supported?](#which-excutable-abis-are-supported)
     - [Can I use the local filesystem?](#can-i-use-the-local-filesystem)
+    - [Which system calls are supported?](#which-system-calls-are-supported)
+    - [Which executable ABIs are supported?](#which-executable-abis-are-supported)
     - [How can my service can tell it is running on Cloud Run?](#how-can-my-service-can-tell-it-is-running-on-cloud-run)
+    - [What is the termination signal for Cloud Run services?](#what-is-the-termination-signal-for-cloud-run-services)
   - [Monitoring and Logging](#monitoring-and-logging)
     - [Where do I write my application logs?](#where-do-i-write-my-application-logs)
     - [How can I have structured logs?](#how-can-i-have-structured-logs)
@@ -320,8 +321,11 @@ If you view logs from Cloud Run console, these requests are marked:
 
 ![Cold Start Log](img/cold-start-log.png)
 
-
 ## Serving Traffic
+
+### What's the maximum request execution time limit?
+
+Currently, a request times out after **15 minutes**. See [limits][lim].
 
 ### Does my service get a domain name on Cloud Run?
 
@@ -398,10 +402,6 @@ requests][lim].
 
 ## Runtime
 
-### What's the request execution time limit?
-
-(Currently) after **15 minutes**, a request will timeout. See [Limits][lim].
-
 ### Which operating system Cloud Run applications run on?
 
 Linux.
@@ -412,6 +412,14 @@ based images).
 
 Your applications run on [gVisor](https://gvisor.dev/docs/) which only supports
 Linux (currently).
+
+### Can I use the local filesystem?
+
+Yes, **however** files written to the local filesystem **count towards available
+memory** and may cause container instance to go out-of-memory and crash.
+
+Therefore, writing files to local filesystem are discouraged, with the exception
+of [`/var/log/*` path for logging](https://cloud.google.com/run/docs/logging).
 
 ### Which system calls are supported?
 
@@ -435,14 +443,6 @@ Contract][container-contract].
 
 [container-contract]: https://cloud.google.com/run/docs/reference/container-contract
 
-### Can I use the local filesystem?
-
-Yes, **however** files written to the local filesystem **count towards available
-memory** and may cause container instance to go out-of-memory and crash.
-
-Therefore, writing files to local filesystem are discouraged, with the exception
-of [`/var/log/*` path for logging](https://cloud.google.com/run/docs/logging).
-
 ### How can my service can tell it is running on Cloud Run?
 
 Cloud Run provides some [environment variables][container-contract] standard
@@ -457,6 +457,12 @@ endpoints like
 `http://metadata.google.internal/computeMetadata/v1/project/project-id` to
 determine if you are on Cloud Run. However this will not distinguish "Cloud Run"
 vs "Cloud Run on GKE" as the metadata service is available on GKE nodes as well.
+
+### What is the termination signal for Cloud Run services?
+
+Currently, Cloud Run abruptly terminates applications while [scaling to
+zero](#does-my-cloud-run-service-scale-to-zero) with `SIGINT` (interrupt)
+signal.
 
 ## Monitoring and Logging
 
