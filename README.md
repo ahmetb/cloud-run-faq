@@ -566,7 +566,7 @@ application (egress traffic).
 -----
 
 This is not an official Google project or roadmap. Refer to the [Cloud Run
-documentation][docs] for the authoritative information. This process is
+documentation][docs] for the authoritative information. This project is
 [licensed](./LICENSE) under Creative common Attribution 4.0 International (CC BY
 4.0) license.
 
