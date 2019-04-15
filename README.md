@@ -6,11 +6,10 @@
 > go out of date.
 
 - **Is this repo useful?** Please **⭑Star** this repository and share the love.
-- **Curious about something?** Open an [issue](/issues), someone may be able to
+- **Curious?** Open an [issue](/issues), someone may be able to
   add it to the FAQ. If you are having trouble using Cloud Run, [ask on Stack
   Overflow][so].
-- **Just learned something that's not here?** Contribute by making a pull
-  request!
+- **Just learned something?** Contribute questions/answers with pull requests.
 
 [run]: https://cloud.google.com/run/
 [docs]: https://cloud.google.com/run/docs
