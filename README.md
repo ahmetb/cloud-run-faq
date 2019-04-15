@@ -357,6 +357,11 @@ the Internet, or **private services** that require [authentication]
 
 [authentication]: https://cloud.google.com/run/docs/securing/authenticating.
 
+### How much additional latency does running on Cloud Run add?
+
+> TODO(ahmetb): Write this section. Ideally we should link to some blog posts
+> doing an analysis of this.
+
 ### Does my application get multiple requests concurrently?
 
 Contrary to most serverless products, Cloud Run is able to send multiple
