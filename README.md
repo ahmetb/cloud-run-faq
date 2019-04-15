@@ -1,18 +1,16 @@
 # Google Cloud Run - FAQ
 
-<!--
-- **Is this repo useful?** Please click the **⭑Star** button if you liked it!
-- **Your question not answered?** Open an [issue](/issues) and see if we can
-  answer.
-- **Just learned something that's not here?** Contribute by making a pull
-  request!
--->
-
 > ⚠️ This repository is a **community-maintained** knowledge base. It does not
 > reflect Google’s product roadmap.
 >
 > Refer to the [Cloud Run documentation][docs]
 > for the most up-to-date information as this page may go out of date.
+
+- **Is this repo useful?** Please click the **⭑Star** button if you liked it!
+- **Your question not answered?** Open an [issue](/issues) and see if we can
+  answer.
+- **Just learned something that's not here?** Contribute by making a pull
+  request!
 
 [run]: https://cloud.google.com/run/
 [docs]: https://cloud.google.com/run/docs
@@ -46,7 +44,6 @@ compatible with Github Flavored Markdown.
     - [Where do I get started to deploy a HTTP web server container?](#where-do-i-get-started-to-deploy-a-http-web-server-container)
     - [How do I make my web application compatible with Cloud Run?](#how-do-i-make-my-web-application-compatible-with-cloud-run)
   - [Deploying](#deploying)
-    - [How do I continuously deploy to Cloud Run?](#how-do-i-continuously-deploy-to-cloud-run)
     - [Which container registries can I deploy from?](#which-container-registries-can-i-deploy-from)
     - [How can I deploy from other GCR registries?](#how-can-i-deploy-from-other-gcr-registries)
     - [Can I use `kubectl` to deploy to Cloud Run?](#can-i-use-kubectl-to-deploy-to-cloud-run)
