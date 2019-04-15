@@ -458,11 +458,18 @@ endpoints like
 determine if you are on Cloud Run. However this will not distinguish "Cloud Run"
 vs "Cloud Run on GKE" as the metadata service is available on GKE nodes as well.
 
+### What happens if my container exits/crashes?
+
+If the entrypoint process of a container exits, the container is stopped. A
+crashed container triggers [cold start](#cold-starts) while the container is
+restarted. Avoid exiting/crashing your server process by handling exceptions.
+
 ### What is the termination signal for Cloud Run services?
 
-Currently, Cloud Run abruptly terminates applications while [scaling to
-zero](#does-my-cloud-run-service-scale-to-zero) with `SIGINT` (interrupt)
-signal.
+Currently, Cloud Run terminates containers while [scaling to
+zero](#does-my-cloud-run-service-scale-to-zero) with `SIGKILL` (kill)
+signal. This signal is not trappable (capturable) by applications. Therefore,
+your applications should be okay if they are killed abruptly.
 
 ## Monitoring and Logging
 
