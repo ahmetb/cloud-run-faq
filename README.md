@@ -71,9 +71,9 @@ compatible with Github Flavored Markdown.
   * [Can I use the local filesystem?](#can-i-use-the-local-filesystem)
   * [Which system calls are supported?](#which-system-calls-are-supported)
   * [Which executable ABIs are supported?](#which-executable-abis-are-supported)
-  * [How can my service can tell it is running on Cloud Run?](#how-can-my-service-can-tell-it-is-running-on-cloud-run)
   * [What happens if my container exits/crashes?](#what-happens-if-my-container-exitscrashes)
   * [What is the termination signal for Cloud Run services?](#what-is-the-termination-signal-for-cloud-run-services)
+  * [How can my service can tell it is running on Cloud Run?](#how-can-my-service-can-tell-it-is-running-on-cloud-run)
 - [Monitoring and Logging](#monitoring-and-logging)
   * [Where do I write my application logs?](#where-do-i-write-my-application-logs)
   * [How can I have structured logs?](#how-can-i-have-structured-logs)
@@ -105,8 +105,9 @@ handled.
 ### How is it different than App Engine Flexible?
 
 [GAE Flexible](https://cloud.google.com/appengine/docs/flexible/) and [Cloud
-Run][run] are very similar, since they both accept "container images", they both
-auto-scale, and manage the infrastructure your code runs on for you. However,
+Run][run] are very similar. They both execute your application code in
+containers, they both auto-scale, and manage the infrastructure your code runs
+on for you. However:
 
 * GAE Flexible is built on VMs, therefore is slower to deploy and scale.
 * GAE Flexible does not scale to zero, at least 1 instance must be running.
@@ -448,21 +449,6 @@ Contract][container-contract].
 
 [container-contract]: https://cloud.google.com/run/docs/reference/container-contract
 
-### How can my service can tell it is running on Cloud Run?
-
-Cloud Run provides some [environment variables][container-contract] standard
-in [Knative][knative].
-
-Ideally you should explicitly deploy your app with an environment variable
-indicating it is running on Cloud Run.
-
-You can also access [instance
-metadata](https://cloud.google.com/appengine/docs/standard/java/accessing-instance-metadata)
-endpoints like
-`http://metadata.google.internal/computeMetadata/v1/project/project-id` to
-determine if you are on Cloud Run. However this will not distinguish "Cloud Run"
-vs "Cloud Run on GKE" as the metadata service is available on GKE nodes as well.
-
 ### What happens if my container exits/crashes?
 
 If the entrypoint process of a container exits, the container is stopped. A
@@ -475,6 +461,20 @@ Currently, Cloud Run terminates containers while [scaling to
 zero](#does-my-cloud-run-service-scale-to-zero) with unix signal 9 (`SIGKILL`).
 `SIGKILL` is not trappable (capturable) by applications. Therefore, your
 applications should be okay to be killed abruptly.
+
+### How can my service can tell it is running on Cloud Run?
+
+Cloud Run provides some [environment variables][container-contract] standard in
+[Knative][knative]. Ideally you should explicitly deploy your app with an
+environment variable indicating it is running on Cloud Run.
+
+You can also access [instance
+metadata](https://cloud.google.com/appengine/docs/standard/java/accessing-instance-metadata)
+endpoints like
+`http://metadata.google.internal/computeMetadata/v1/project/project-id` to
+determine if you are on Cloud Run. However, this will not distinguish "Cloud
+Run" vs "Cloud Run on GKE" as the metadata service is available on GKE nodes as
+well.
 
 ## Monitoring and Logging
 
