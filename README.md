@@ -1,19 +1,22 @@
-# Google Cloud Run - FAQ
+# [Google Cloud Run][run] - FAQ
 
 > ⚠️ This repository is a **community-maintained** knowledge base. It does not
-> reflect Google’s product roadmap.
->
-> Refer to the [Cloud Run documentation][docs]
-> for the most up-to-date information as this page may go out of date.
+> reflect Google’s product roadmap. Refer to the [**Cloud Run
+> documentation**][docs] for the most up-to-date information, as this page may
+> go out of date.
 
-- **Is this repo useful?** Please click the **⭑Star** button if you liked it!
-- **Your question not answered?** Open an [issue](/issues) and see if we can
-  answer.
+- **Is this repo useful?** Please **⭑Star** this repository and share the love.
+- **Curious about something?** Open an [issue](/issues), someone may be able to
+  add it to the FAQ. If you are having trouble using Cloud Run, [ask on Stack
+  Overflow][so].
 - **Just learned something that's not here?** Contribute by making a pull
   request!
 
 [run]: https://cloud.google.com/run/
 [docs]: https://cloud.google.com/run/docs
+[so]: https://stackoverflow.com/questions/ask?tags=google-cloud-run
+
+-----
 
 <!--
 TODO(ahmetb): All the markdown ToC extensions for vscode I tried deeply suck.
@@ -83,6 +86,8 @@ compatible with Github Flavored Markdown.
   * [What do I pay for on Cloud Run?](#what-do-i-pay-for-on-cloud-run)
 
 <!-- tocstop -->
+
+-----
 
 ## Basics
 
