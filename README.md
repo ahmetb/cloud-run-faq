@@ -558,7 +558,12 @@ basically like this:
 You are paying for CPU, memory and the traffic sent to the client from your
 application (egress traffic).
 
----
+-----
 
-**Your question not answered here?** Open an [issue](/issues) and see if we can
+This is not an official Google project or roadmap. Refer to the [Cloud Run
+documentation][docs] for the authoritative information. This process is
+[licensed](./LICENSE) under Creative common Attribution 4.0 International (CC BY
+4.0) license.
+
+> **Your question not answered here?** Open an [issue](/issues) and see if we can
 answer.
