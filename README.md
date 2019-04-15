@@ -467,9 +467,9 @@ restarted. Avoid exiting/crashing your server process by handling exceptions.
 ### What is the termination signal for Cloud Run services?
 
 Currently, Cloud Run terminates containers while [scaling to
-zero](#does-my-cloud-run-service-scale-to-zero) with `SIGKILL` (kill)
-signal. This signal is not trappable (capturable) by applications. Therefore,
-your applications should be okay if they are killed abruptly.
+zero](#does-my-cloud-run-service-scale-to-zero) with unix signal 9 (`SIGKILL`).
+`SIGKILL` is not trappable (capturable) by applications. Therefore, your
+applications should be okay to be killed abruptly.
 
 ## Monitoring and Logging
 
