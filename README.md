@@ -59,6 +59,7 @@ compatible with Github Flavored Markdown.
   * [What's the maximum request execution time limit?](#whats-the-maximum-request-execution-time-limit)
   * [Does my service get a domain name on Cloud Run?](#does-my-service-get-a-domain-name-on-cloud-run)
   * [Are all Cloud Run services publicly accessible?](#are-all-cloud-run-services-publicly-accessible)
+  * [How much additional latency does running on Cloud Run add?](#how-much-additional-latency-does-running-on-cloud-run-add)
   * [Does my application get multiple requests concurrently?](#does-my-application-get-multiple-requests-concurrently)
   * [What if my application can’t handle concurrent requests?](#what-if-my-application-cant-handle-concurrent-requests)
   * [How do I find the right concurrency level for my application?](#how-do-i-find-the-right-concurrency-level-for-my-application)
