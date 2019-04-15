@@ -1,0 +1,5 @@
+language: node_js
+install: npm install -g markdown-toc
+script:
+- markdown-toc -i README.md
+- test -z "$(git diff | tee /dev/stderr)"
