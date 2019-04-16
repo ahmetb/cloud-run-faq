@@ -375,6 +375,9 @@ so consider [lazily
 computing/fetching](https://cloud.google.com/run/docs/tips#performing_lazy_initialization_of_global_variables)
 the data you need to reduce cold start latencies.
 
+Roll your own warmup request system using [Cloud Scheduler](https://cloud.google.com/scheduler)
+(for regularly occurring traffic) or [Cloud Tasks](https://cloud.google.com/tasks) with [HTTP Targets Alpha](https://docs.google.com/forms/d/e/1FAIpQLSfc4uEy9CBHKYUSdnY1hdhKDCX7julVZHy3imOiR-XrU7bUNQ/viewform) (for an anticipated but irregular traffic spike within 30 days using the [scheduleTime parameter](https://cloud.google.com/tasks/docs/reference/rest/v2/projects.locations.queues.tasks#Task)).
+
 ### How can I tell if a request was a “cold start”?
 
 Each request to Cloud Run services is logged to Stackdriver logging, with an
