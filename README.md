@@ -6,13 +6,14 @@
 > go out of date.
 
 - **Is this repo useful?** Please **⭑Star** this repository and share the love.
-- **Curious about something?** Open an [issue](/issues), someone may be able to
-  add it to the FAQ.
+- **Curious about something?** Open an [issue], someone may be able to add it to
+  the FAQ.
 - **Contribute** if you learned something interesting about Cloud Run.
 - **Trouble using Cloud Run?** Ask a question [on Stack  Overflow][so].
 - **Check out** [awesome-cloudrun][awesome] for a curated list of Cloud Run
   articles, tools and examples.
 
+[issue]: https://github.com/ahmetb/cloud-run-faq/issues
 [run]: https://cloud.google.com/run/
 [docs]: https://cloud.google.com/run/docs
 [so]: https://stackoverflow.com/questions/ask?tags=google-cloud-run
@@ -667,5 +668,4 @@ documentation][docs] for the authoritative information. This project is
 [licensed](./LICENSE) under Creative common Attribution 4.0 International (CC BY
 4.0) license.
 
-> **Your question not answered here?** Open an [issue](/issues) and see if we can
-answer.
+> **Your question not answered here?** Open an [issue] and see if we can answer.
