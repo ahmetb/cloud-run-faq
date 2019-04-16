@@ -400,9 +400,9 @@ also use [your domain names][custom-domains].
 ### Are all Cloud Run services publicly accessible?
 
 No. Cloud Run allows services to be either **publicly accessible** to anyone on
-the Internet, or **private services** that require [authentication]
+the Internet, or **private services** that require [authentication].
 
-[authentication]: https://cloud.google.com/run/docs/securing/authenticating.
+[authentication]: https://cloud.google.com/run/docs/securing/authenticating
 
 ### How much additional latency does running on Cloud Run add?
 
