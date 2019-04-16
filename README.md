@@ -46,6 +46,7 @@ compatible with Github Flavored Markdown.
   * [Which applications are suitable for Cloud Run?](#which-applications-are-suitable-for-cloud-run)
   * [What if my application is doing background tasks?](#what-if-my-application-is-doing-background-tasks)
   * [Which languages can I run on Cloud Run?](#which-languages-can-i-run-on-cloud-run)
+  * [Can I run my own system libraries and tools?](#can-i-run-my-own-system-libraries-and-tools)
   * [Where do I get started to deploy a HTTP web server container?](#where-do-i-get-started-to-deploy-a-http-web-server-container)
   * [How do I make my web application compatible with Cloud Run?](#how-do-i-make-my-web-application-compatible-with-cloud-run)
 - [Deploying](#deploying)
@@ -124,12 +125,15 @@ on for you. However:
 (functions) written in a limited set of programming languages, to natively
 handle HTTP requests or events (Pub/Sub).
 
-Cloud Run lets you deploy using any programming language, since it accepts
-container images (more flexible, but also potentially more tedious to develop).
-
-Cloud Run only handles HTTP requests. However it can respond to events that are
+Cloud Run only handles HTTP requests. However, it can respond to events that are
 delivered with [Pub/Sub HTTPS push](https://cloud.google.com/pubsub/docs/push).
 (See [this tutorial](https://cloud.google.com/run/docs/tutorials/pubsub)).
+
+Cloud Run lets you deploy using any programming language, since it accepts
+container images (more flexible, but also potentially more tedious to develop).
+It also allows using any tool or system library from your application (see
+[here](#can-i-run-my-own-system-libraries-and-tools)) and GCF doesn’t let you
+use such custom system executables.
 
 Both services auto-scale your code, manage the infrastructure your code runs on
 and they both run on Google’s serverless infrastructure.
@@ -229,6 +233,16 @@ not supported due to a bug.)_
 Python
 1.3](https://dev.to/di/ministry-of-silly-runtimes-vintage-python-on-cloud-run-3b9d)
 on Cloud Run.
+
+### Can I run my own system libraries and tools?
+
+Yes, see the section above. Since Cloud Run accepts container images as the
+deployment unit, you can add arbitrary executables (like `grep`, `ffmpeg`,
+`imagemagick`) or system libraries (`.so`, `.dll`) to your container image and
+use them in your application.
+
+See [this tutorial](https://cloud.google.com/run/docs/tutorials/system-packages)
+using Graphviz `dot` that generates PNG diagrams.
 
 ### Where do I get started to deploy a HTTP web server container?
 
