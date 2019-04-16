@@ -69,6 +69,9 @@ compatible with Github Flavored Markdown.
   * [Does my application get multiple requests concurrently?](#does-my-application-get-multiple-requests-concurrently)
   * [What if my application can’t handle concurrent requests?](#what-if-my-application-cant-handle-concurrent-requests)
   * [How do I find the right concurrency level for my application?](#how-do-i-find-the-right-concurrency-level-for-my-application)
+  * [Is HTTP/2 supported on Cloud Run?](#is-http2-supported-on-cloud-run)
+  * [Is gRPC supported on Cloud Run?](#is-grpc-supported-on-cloud-run)
+  * [Are WebSockets supported on Cloud Run?](#are-websockets-supported-on-cloud-run)
 - [Autoscaling](#autoscaling)
   * [Does my Cloud Run service scale to zero?](#does-my-cloud-run-service-scale-to-zero)
   * [How can I limit the total number of instances for my application?](#how-can-i-limit-the-total-number-of-instances-for-my-application)
@@ -168,7 +171,7 @@ Run, you only pay while a request is being handled.
 
 ### What is “Cloud Run on GKE”?
 
-"Cloud Run on GKE" gives you the same Cloud Run experience on your
+["Cloud Run on GKE"][crogke] gives you the same Cloud Run experience on your
 [Kubernetes](https://kubernetes.io) clusters running on
 [GKE](https://cloud.google.com/kubernetes-engine/). This gives you the freedom
 to choose where you want to deploy your applications.
@@ -444,6 +447,31 @@ You should do "load testing" to find out where your application should stop
 handling additional request and additional instances should be created. Read
 [Tuning concurrency](https://cloud.google.com/run/docs/tips#using_concurrency)
 for more.
+
+### Is HTTP/2 supported on Cloud Run?
+
+Yes. If you query your application with `https://`, you should be seeing HTTP/2
+protocol used:
+
+```
+$ curl -v https://<url>
+...
+< HTTP/2 200
+...
+```
+
+### Is gRPC supported on Cloud Run?
+
+[gRPC](https://grpc.io) is currently not supported on Cloud Run. However, [Cloud
+Run on GKE][crogke] supports running applications serving gRPC traffic.
+
+[crogke]: https://cloud.google.com/run/docs/gke/setup
+
+### Are WebSockets supported on Cloud Run?
+
+[WebSockets](https://en.wikipedia.org/wiki/WebSocket) are currently not
+supported on Cloud Run. However, [Cloud Run on GKE][crogke] supports running
+applications capable of doing WebSockets.
 
 ## Autoscaling
 
