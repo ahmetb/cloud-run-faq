@@ -41,6 +41,7 @@ compatible with Github Flavored Markdown.
   * [Is Cloud Run hosted Knative?](#is-cloud-run-hosted-knative)
 - [Developing Applications](#developing-applications)
   * [Which applications are suitable for Cloud Run?](#which-applications-are-suitable-for-cloud-run)
+  * [What if my application is doing background tasks?](#what-if-my-application-is-doing-background-tasks)
   * [Which languages can I run on Cloud Run?](#which-languages-can-i-run-on-cloud-run)
   * [Where do I get started to deploy a HTTP web server container?](#where-do-i-get-started-to-deploy-a-http-web-server-container)
   * [How do I make my web application compatible with Cloud Run?](#how-do-i-make-my-web-application-compatible-with-cloud-run)
@@ -199,8 +200,17 @@ installation.
 [Cloud Run][run] is designed to run **stateless** HTTP web application
 containers. Other kinds of applications may not be fit for Cloud Run.
 
-If your application is doing background processing while it’s not processing
+If your application is doing **background processing** while it’s not handling
 requests or storing in-memory state, it may not be suitable.
+
+### What if my application is doing background tasks?
+
+Your application’s CPU usage allowance is **significantly throttled** when it's
+not handling a request.
+
+Therefore, your application should limit CPU usage outside request processing to
+a minimum. It might not be entirely possible since the programming language you
+use doing _garbage collection_ or similar runtime tasks in the background.
 
 ### Which languages can I run on Cloud Run?
 
