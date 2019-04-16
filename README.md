@@ -59,6 +59,7 @@ compatible with Github Flavored Markdown.
   * [Does Cloud Run have cold starts?](#does-cloud-run-have-cold-starts)
   * [When will my service scale to zero?](#when-will-my-service-scale-to-zero)
   * [How do I minimize the cold start latencies?](#how-do-i-minimize-the-cold-start-latencies)
+  * [Do I get "warmup requests" like in App Engine?](#do-i-get-warmup-requests-like-in-app-engine)
   * [How can I tell if a request was a “cold start”?](#how-can-i-tell-if-a-request-was-a-cold-start)
 - [Serving Traffic](#serving-traffic)
   * [What's the maximum request execution time limit?](#whats-the-maximum-request-execution-time-limit)
@@ -357,6 +358,18 @@ basically:
 - keep your app’s "time to listen for requests" startup time short
 - prevent your application process from crashing
 
+### Do I get "warmup requests" like in App Engine?
+
+Cloud Run does not have the notion of [App Engine warmup
+requests](https://cloud.google.com/appengine/docs/standard/python/configuring-warmup-requests).
+You can perform initialization of your application (such as loading data) until
+you start listening on the port number.
+
+Note that delaying the listening on the port number causes longer _cold starts_,
+so consider [lazily
+computing/fetching](https://cloud.google.com/run/docs/tips#performing_lazy_initialization_of_global_variables)
+the data you need to reduce cold start latencies.
+
 ### How can I tell if a request was a “cold start”?
 
 Each request to Cloud Run services is logged to Stackdriver logging, with an
@@ -365,7 +378,9 @@ indicator whether instance was "warm" or "cold" during that request (see
 
 [logging]: https://cloud.google.com/run/docs/logging
 
-If you view logs from Cloud Run console, these requests are marked:
+If you view logs from Cloud Run console, these requests are marked (and if you
+view them in Stackdriver Logging, you can see the structured log label
+indicating "cold" request):
 
 ![Cold Start Log](img/cold-start-log.png)
 
