@@ -214,7 +214,7 @@ zero while it's not handling a request.
 
 Therefore, your application should limit CPU usage outside request processing to
 a minimum. It might not be entirely possible since the programming language you
-use doing _garbage collection_ or similar runtime tasks in the background.
+use might do _garbage collection_ or similar runtime tasks in the background.
 
 ### Which languages can I run on Cloud Run?
 
