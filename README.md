@@ -544,6 +544,7 @@ Contract][container-contract].
 If the entrypoint process of a container exits, the container is stopped. A
 crashed container triggers [cold start](#cold-starts) while the container is
 restarted. Avoid exiting/crashing your server process by handling exceptions.
+See [development tips](https://cloud.google.com/run/docs/tips#reporting_errors).
 
 ### What is the termination signal for Cloud Run services?
 
