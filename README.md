@@ -69,6 +69,7 @@ compatible with Github Flavored Markdown.
   * [Does my application get multiple requests concurrently?](#does-my-application-get-multiple-requests-concurrently)
   * [What if my application can’t handle concurrent requests?](#what-if-my-application-cant-handle-concurrent-requests)
   * [How do I find the right concurrency level for my application?](#how-do-i-find-the-right-concurrency-level-for-my-application)
+  * [Does Cloud Run offer SSL/TLS certificates (HTTPS)?](#does-cloud-run-offer-ssltls-certificates-https)
   * [Is HTTP/2 supported on Cloud Run?](#is-http2-supported-on-cloud-run)
   * [Is gRPC supported on Cloud Run?](#is-grpc-supported-on-cloud-run)
   * [Are WebSockets supported on Cloud Run?](#are-websockets-supported-on-cloud-run)
@@ -447,6 +448,18 @@ You should do "load testing" to find out where your application should stop
 handling additional request and additional instances should be created. Read
 [Tuning concurrency](https://cloud.google.com/run/docs/tips#using_concurrency)
 for more.
+
+### Does Cloud Run offer SSL/TLS certificates (HTTPS)?
+
+Yes. If you’re using the domain name provided by Cloud Run (`*.run.app`), your
+application is immediately ready to serve on `https://` protocol.
+
+If you’re using your own [custom domain] name, Cloud Run provisions a TLS
+certificate for your domain name. This may take ~15 minutes to provision and
+serve traffic on `https://`. Cloud Run uses [Let’s
+Encrypt](https://letsencrypt.org/) to get a certificate for your domains.
+
+[custom domain]: https://cloud.google.com/run/docs/mapping-custom-domains
 
 ### Is HTTP/2 supported on Cloud Run?
 
