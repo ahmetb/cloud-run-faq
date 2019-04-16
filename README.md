@@ -79,6 +79,7 @@ compatible with Github Flavored Markdown.
   * [Which executable ABIs are supported?](#which-executable-abis-are-supported)
   * [What happens if my container exits/crashes?](#what-happens-if-my-container-exitscrashes)
   * [What is the termination signal for Cloud Run services?](#what-is-the-termination-signal-for-cloud-run-services)
+  * [Where can I find the "instance ID" of my container?](#where-can-i-find-the-instance-id-of-my-container)
   * [How can my service can tell it is running on Cloud Run?](#how-can-my-service-can-tell-it-is-running-on-cloud-run)
 - [Monitoring and Logging](#monitoring-and-logging)
   * [Where do I write my application logs?](#where-do-i-write-my-application-logs)
@@ -360,7 +361,9 @@ basically:
 
 Each request to Cloud Run services is logged to Stackdriver logging, with an
 indicator whether instance was "warm" or "cold" during that request (see
-[Viewing Logs](https://cloud.google.com/run/docs/logging)).
+[Viewing Logs][logging]).
+
+[logging]: https://cloud.google.com/run/docs/logging
 
 If you view logs from Cloud Run console, these requests are marked:
 
@@ -506,6 +509,15 @@ zero](#does-my-cloud-run-service-scale-to-zero) with unix signal 9 (`SIGKILL`).
 `SIGKILL` is not trappable (capturable) by applications. Therefore, your
 applications should be okay to be killed abruptly.
 
+### Where can I find the "instance ID" of my container?
+
+The [logs][logging] collected from a container instance specify the unique
+instance ID of the container when the logs are viewed on Stackdriver Logging.
+This instance ID is not made available to the application.
+
+To identify your container instance while it’s running, generate a random UUID
+during the startup of your process and store it in a variable.
+
 ### How can my service can tell it is running on Cloud Run?
 
 Cloud Run provides some [environment variables][container-contract] standard in
@@ -529,7 +541,7 @@ Anything your application writes to standard output (stdout) or standard error
 
 Some existing apps might not be complying with that (e.g. nginx writes logs to
 `/var/log/nginx/error.log`). Therefore any files written under `/var/log/*` are
-also aggregated. [Learn more here](https://cloud.google.com/run/docs/logging).
+also aggregated. [Learn more here][logging].
 
 ### How can I have structured logs?
 
