@@ -50,6 +50,7 @@ compatible with Github Flavored Markdown.
   * [Can I run my own system libraries and tools?](#can-i-run-my-own-system-libraries-and-tools)
   * [Where do I get started to deploy a HTTP web server container?](#where-do-i-get-started-to-deploy-a-http-web-server-container)
   * [How do I make my web application compatible with Cloud Run?](#how-do-i-make-my-web-application-compatible-with-cloud-run)
+  * [How can I have cronjobs on Cloud Run?](#how-can-i-have-cronjobs-on-cloud-run)
 - [Deploying](#deploying)
   * [How do I continuously deploy to Cloud Run?](#how-do-i-continuously-deploy-to-cloud-run)
   * [Which container registries can I deploy from?](#which-container-registries-can-i-deploy-from)
@@ -265,6 +266,12 @@ currently only `8080`, but it may change in the future.)
 
 If your existing application doesn't allow you to configure port number it
 listens on, Cloud Run currently doesn't allow customizing the `PORT` value.
+
+### How can I have cronjobs on Cloud Run?
+
+If you need to invoke your Cloud Run applications periodically, use
+[Google Cloud Scheduler](https://cloud.google.com/scheduler/). It can make a
+request to your application’s specific URL at an interval you specify.
 
 ## Deploying
 
