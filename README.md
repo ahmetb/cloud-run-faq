@@ -87,6 +87,7 @@ compatible with Github Flavored Markdown.
   * [What happens if my container exits/crashes?](#what-happens-if-my-container-exitscrashes)
   * [What is the termination signal for Cloud Run services?](#what-is-the-termination-signal-for-cloud-run-services)
   * [Where can I find the "instance ID" of my container?](#where-can-i-find-the-instance-id-of-my-container)
+  * [How can I find the number of instances running?](#how-can-i-find-the-number-of-instances-running)
   * [How can my service can tell it is running on Cloud Run?](#how-can-my-service-can-tell-it-is-running-on-cloud-run)
 - [Monitoring and Logging](#monitoring-and-logging)
   * [Where do I write my application logs?](#where-do-i-write-my-application-logs)
@@ -582,6 +583,15 @@ This instance ID is not made available to the application.
 
 To identify your container instance while it’s running, generate a random UUID
 during the startup of your process and store it in a variable.
+
+### How can I find the number of instances running?
+
+Cloud Run currently does not offer you a way to learn the number of container
+instances running at a time.
+
+Ideally you should not care about this in a serverless world where your
+applications autoscale based on traffic patterns better and you only pay while
+a request is being handled (not the idle instance time).
 
 ### How can my service can tell it is running on Cloud Run?
 
