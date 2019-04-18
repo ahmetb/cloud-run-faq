@@ -224,9 +224,8 @@ requests or storing in-memory state, it may not be suitable.
 
 ### What if my application is doing background tasks?
 
-Your application’s CPU allowance is **significantly throttled** nearly down to
-zero while it's not handling a request.
-<sup>[[source](https://youtu.be/xVuuvZkYiNM?t=552)]</sup>
+Your application’s CPU is **[significantly throttled][cpu]** nearly down to zero
+while it's not handling a request.
 
 Therefore, your application should limit CPU usage outside request processing to
 a minimum. It might not be entirely possible since the programming language you
@@ -563,6 +562,7 @@ precise, ELF executables compiled to
 Contract][container-contract].
 
 [container-contract]: https://cloud.google.com/run/docs/reference/container-contract
+[cpu]: https://cloud.google.com/run/docs/reference/container-contract#cpu
 
 ### What happens if my container exits/crashes?
 
