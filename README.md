@@ -127,6 +127,7 @@ on for you. However:
 * GAE Flexible is built on VMs, therefore is slower to deploy and scale.
 * GAE Flexible does not scale to zero, at least 1 instance must be running.
 * GAE Flexible billing has 1 minute granularity, Cloud Run in 0.1 second.
+* GAE Flexible supports [Websockets](https://cloud.google.com/blog/products/application-development/introducing-websockets-support-for-app-engine-flexible-environment) in beta, unlike Cloud Run
 
 ### How is it different than Google Cloud Functions?
 
