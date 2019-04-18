@@ -61,7 +61,7 @@ compatible with Github Flavored Markdown.
   * [When will my service scale to zero?](#when-will-my-service-scale-to-zero)
   * [How do I minimize the cold start latencies?](#how-do-i-minimize-the-cold-start-latencies)
   * [Do I get "warmup requests" like in App Engine?](#do-i-get-warmup-requests-like-in-app-engine)
-  * [How can I keep my Cloud Run services “warm”?](#how-can-i-keep-my-cloud-run-services-warm)
+  * [How to keep a Cloud Run service “warm”?](#how-to-keep-a-cloud-run-service-warm)
   * [How can I tell if a request was a “cold start”?](#how-can-i-tell-if-a-request-was-a-cold-start)
 - [Serving Traffic](#serving-traffic)
   * [What's the maximum request execution time limit?](#whats-the-maximum-request-execution-time-limit)
