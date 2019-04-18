@@ -61,6 +61,7 @@ compatible with Github Flavored Markdown.
   * [When will my service scale to zero?](#when-will-my-service-scale-to-zero)
   * [How do I minimize the cold start latencies?](#how-do-i-minimize-the-cold-start-latencies)
   * [Do I get "warmup requests" like in App Engine?](#do-i-get-warmup-requests-like-in-app-engine)
+  * [How can I keep my Cloud Run services “warm”?](#how-can-i-keep-my-cloud-run-services-warm)
   * [How can I tell if a request was a “cold start”?](#how-can-i-tell-if-a-request-was-a-cold-start)
 - [Serving Traffic](#serving-traffic)
   * [What's the maximum request execution time limit?](#whats-the-maximum-request-execution-time-limit)
@@ -375,8 +376,12 @@ so consider [lazily
 computing/fetching](https://cloud.google.com/run/docs/tips#performing_lazy_initialization_of_global_variables)
 the data you need to reduce cold start latencies.
 
-Roll your own warmup request system using [Cloud Scheduler](https://cloud.google.com/scheduler)
-(for regularly occurring traffic) or [Cloud Tasks](https://cloud.google.com/tasks) with [HTTP Targets Alpha](https://docs.google.com/forms/d/e/1FAIpQLSfc4uEy9CBHKYUSdnY1hdhKDCX7julVZHy3imOiR-XrU7bUNQ/viewform) (for an anticipated but irregular traffic spike within 30 days using the [scheduleTime parameter](https://cloud.google.com/tasks/docs/reference/rest/v2/projects.locations.queues.tasks#Task)).
+### How can I keep my Cloud Run services “warm”?
+
+You can work around "cold starts" by periodically making requests to your Cloud
+Run service. You can use [Google Cloud
+Scheduler](https://cloud.google.com/scheduler) to make requests every few
+minutes or keep your container instances from scaling to zero.
 
 ### How can I tell if a request was a “cold start”?
 
