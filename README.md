@@ -376,12 +376,14 @@ so consider [lazily
 computing/fetching](https://cloud.google.com/run/docs/tips#performing_lazy_initialization_of_global_variables)
 the data you need to reduce cold start latencies.
 
-### How can I keep my Cloud Run services “warm”?
+### How to keep a Cloud Run service “warm”?
 
 You can work around "cold starts" by periodically making requests to your Cloud
-Run service. You can use [Google Cloud
-Scheduler](https://cloud.google.com/scheduler) to make requests every few
-minutes or keep your container instances from scaling to zero.
+Run service which can help prevent the container instances from scaling to
+zero.
+
+Use [Google Cloud Scheduler](https://cloud.google.com/scheduler) to make
+requests every few minutes.
 
 ### How can I tell if a request was a “cold start”?
 
