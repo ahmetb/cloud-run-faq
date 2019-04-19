@@ -73,6 +73,8 @@ compatible with Github Flavored Markdown.
   * [What if my application can’t handle concurrent requests?](#what-if-my-application-cant-handle-concurrent-requests)
   * [How do I find the right concurrency level for my application?](#how-do-i-find-the-right-concurrency-level-for-my-application)
   * [Does Cloud Run offer SSL/TLS certificates (HTTPS)?](#does-cloud-run-offer-ssltls-certificates-https)
+  * [How can I redirect all HTTP traffic to HTTPS?](#how-can-i-redirect-all-http-traffic-to-https)
+  * [Is traffic between my app and Google’s load balancer encrypted?](#is-traffic-between-my-app-and-googles-load-balancer-encrypted)
   * [Is HTTP/2 supported on Cloud Run?](#is-http2-supported-on-cloud-run)
   * [Is gRPC supported on Cloud Run?](#is-grpc-supported-on-cloud-run)
   * [Are WebSockets supported on Cloud Run?](#are-websockets-supported-on-cloud-run)
@@ -481,6 +483,24 @@ serve traffic on `https://`. Cloud Run uses [Let’s
 Encrypt](https://letsencrypt.org/) to get a certificate for your domains.
 
 [custom domain]: https://cloud.google.com/run/docs/mapping-custom-domains
+
+### How can I redirect all HTTP traffic to HTTPS?
+
+Unfortunately, Cloud Run does not offer a built-in feature to redirect all
+`http://` traffic to `https://`. However, your application can readt the
+`X-Forwarded-Proto` header and when it is `http`, make an HTTP 301 response to
+redirect to the `https://` endpoint.
+<sup>([source](https://stackoverflow.com/questions/55699148/how-to-redirect-all-http-traffic-to-https-in-google-cloud-run))</sup>
+
+### Is traffic between my app and Google’s load balancer encrypted?
+
+Since your app serves traffic on `PORT` (i.e. 8080) unencrypted, you might think
+the connection between Google’s load balancer and your application is
+unencrypted.
+
+However, the transit between Google’s frontend/load balancer and your Cloud Run
+container instance is encrypted. Google terminates TLS/HTTPS connections before
+they reach your application, so that you don’t have to handle TLS yourself.
 
 ### Is HTTP/2 supported on Cloud Run?
 
