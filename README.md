@@ -62,6 +62,7 @@ compatible with Github Flavored Markdown.
   * [When will my service scale to zero?](#when-will-my-service-scale-to-zero)
   * [How do I minimize the cold start latencies?](#how-do-i-minimize-the-cold-start-latencies)
   * [Do I get "warmup requests" like in App Engine?](#do-i-get-warmup-requests-like-in-app-engine)
+  * [How to keep a Cloud Run service “warm”?](#how-to-keep-a-cloud-run-service-warm)
   * [How can I tell if a request was a “cold start”?](#how-can-i-tell-if-a-request-was-a-cold-start)
 - [Serving Traffic](#serving-traffic)
   * [What's the maximum request execution time limit?](#whats-the-maximum-request-execution-time-limit)
@@ -384,6 +385,15 @@ Note that delaying the listening on the port number causes longer _cold starts_,
 so consider [lazily
 computing/fetching](https://cloud.google.com/run/docs/tips#performing_lazy_initialization_of_global_variables)
 the data you need to reduce cold start latencies.
+
+### How to keep a Cloud Run service “warm”?
+
+You can work around "cold starts" by periodically making requests to your Cloud
+Run service which can help prevent the container instances from scaling to
+zero.
+
+Use [Google Cloud Scheduler](https://cloud.google.com/scheduler) to make
+requests every few minutes.
 
 ### How can I tell if a request was a “cold start”?
 
