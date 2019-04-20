@@ -291,6 +291,7 @@ Yes.
 
 Cloud Run integrates securely with Pub/Sub push subscriptions:
 
+* Events are delivered via HTTP to the endpoint of your Cloud Run service.
 * Pub/Sub automatically validates the ownership of the `*.run.app` Cloud Run
 URLs 
 * You can leverage [Pub/Sub push authentication](https://cloud.google.com/pubsub/docs/push#setting_up_for_push_authentication)
