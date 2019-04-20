@@ -302,6 +302,9 @@ Pub/Sub topic](https://cloud.google.com/storage/docs/pubsub-notifications).
 You can publish your own events to a Pub/Sub topic and push them to a Cloud
 Run service.
 
+Follow [this tutorial](https://cloud.google.com/run/docs/tutorials/pubsub) for
+instructions about how to push Pub/Sub events to Cloud Run services.
+
 ### How can I have cronjobs on Cloud Run?
 
 If you need to invoke your Cloud Run applications periodically, use
