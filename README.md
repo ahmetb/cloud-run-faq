@@ -286,6 +286,8 @@ request to your application’s specific URL at an interval you specify.
 Follow [this tutorial](https://cloud.google.com/run/docs/continuous-deployment)
 to learn how you can deploy on a new git commit using [Google Cloud Build][gcb].
 
+[Deployment using GitLab](https://viggy28.dev/article/cloudrun-cicd/)
+
 (If you know of articles about other CI/CD system integrations, add them here.)
 
 For other external CI/CD systems, roughly the steps you should follow:
