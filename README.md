@@ -29,8 +29,7 @@ compatible with Github Flavored Markdown.
 
 <!--
   ⚠️ DO NOT UPDATE THE TABLE OF CONTENTS MANUALLY ️️⚠️
-  - install markdown-toc tool: npm install -g markdown-toc
-  - run: markdown-toc -i README.md
+  run `npx markdown-toc -i README.md`
 -->
 
 <!-- toc -->
@@ -45,11 +44,12 @@ compatible with Github Flavored Markdown.
   * [Is Cloud Run hosted Knative?](#is-cloud-run-hosted-knative)
 - [Developing Applications](#developing-applications)
   * [Which applications are suitable for Cloud Run?](#which-applications-are-suitable-for-cloud-run)
-  * [What if my application is doing background tasks?](#what-if-my-application-is-doing-background-tasks)
+  * [What if my application is doing background work outside of request processing?](#what-if-my-application-is-doing-background-work-outside-of-request-processing)
   * [Which languages can I run on Cloud Run?](#which-languages-can-i-run-on-cloud-run)
   * [Can I run my own system libraries and tools?](#can-i-run-my-own-system-libraries-and-tools)
   * [Where do I get started to deploy a HTTP web server container?](#where-do-i-get-started-to-deploy-a-http-web-server-container)
   * [How do I make my web application compatible with Cloud Run?](#how-do-i-make-my-web-application-compatible-with-cloud-run)
+  * [Can Cloud Run receive events?](#can-cloud-run-receive-events)
   * [How can I have cronjobs on Cloud Run?](#how-can-i-have-cronjobs-on-cloud-run)
 - [Deploying](#deploying)
   * [How do I continuously deploy to Cloud Run?](#how-do-i-continuously-deploy-to-cloud-run)
