@@ -155,7 +155,7 @@ and they both run on GCP’s serverless infrastructure.
 ### How does it compare to AWS Fargate?
 
 [AWS Fargate](https://aws.amazon.com/fargate/) and Cloud Run both let you run
-containers without managing the underlying VM insances).
+containers without managing the underlying VM instances).
 
 Fargate focuses on being a managed replacement for VM instances in Amazon Elastic
 Container Service (ECS). It shares the same API constructs as ECS. In Fargate, you
