@@ -283,14 +283,12 @@ request to your application’s specific URL at an interval you specify.
 
 ### How do I continuously deploy to Cloud Run?
 
-Follow [this tutorial](https://cloud.google.com/run/docs/continuous-deployment)
-to learn how you can deploy on a new git commit using [Google Cloud Build][gcb].
+- Tutorial: [Continuous Deployment using Google Cloud Buold](https://cloud.google.com/run/docs/continuous-deployment)
+- Blog: [Deploy using GitLab CI/CD](https://viggy28.dev/article/cloudrun-cicd/)
 
-[Deployment using GitLab](https://viggy28.dev/article/cloudrun-cicd/)
+_(If you know of articles about other CI/CD system integrations, add them here.)_
 
-(If you know of articles about other CI/CD system integrations, add them here.)
-
-For other external CI/CD systems, roughly the steps you should follow:
+For other CI/CD systems, roughly the steps you should follow look like:
 
 1. Create a new service account with a JSON key.
 1. Give the service account IAM permissions to deploy to Cloud Run.
