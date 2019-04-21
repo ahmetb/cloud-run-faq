@@ -29,8 +29,7 @@ compatible with Github Flavored Markdown.
 
 <!--
   ⚠️ DO NOT UPDATE THE TABLE OF CONTENTS MANUALLY ️️⚠️
-  - install markdown-toc tool: npm install -g markdown-toc
-  - run: markdown-toc -i README.md
+  run `npx markdown-toc -i README.md`
 -->
 
 <!-- toc -->
@@ -45,11 +44,12 @@ compatible with Github Flavored Markdown.
   * [Is Cloud Run hosted Knative?](#is-cloud-run-hosted-knative)
 - [Developing Applications](#developing-applications)
   * [Which applications are suitable for Cloud Run?](#which-applications-are-suitable-for-cloud-run)
-  * [What if my application is doing background tasks?](#what-if-my-application-is-doing-background-tasks)
+  * [What if my application is doing background work outside of request processing?](#what-if-my-application-is-doing-background-work-outside-of-request-processing)
   * [Which languages can I run on Cloud Run?](#which-languages-can-i-run-on-cloud-run)
   * [Can I run my own system libraries and tools?](#can-i-run-my-own-system-libraries-and-tools)
   * [Where do I get started to deploy a HTTP web server container?](#where-do-i-get-started-to-deploy-a-http-web-server-container)
   * [How do I make my web application compatible with Cloud Run?](#how-do-i-make-my-web-application-compatible-with-cloud-run)
+  * [Can Cloud Run receive events?](#can-cloud-run-receive-events)
   * [How can I have cronjobs on Cloud Run?](#how-can-i-have-cronjobs-on-cloud-run)
 - [Deploying](#deploying)
   * [How do I continuously deploy to Cloud Run?](#how-do-i-continuously-deploy-to-cloud-run)
@@ -123,8 +123,8 @@ handled.
 ### How is it different than App Engine Flexible?
 
 [GAE Flexible](https://cloud.google.com/appengine/docs/flexible/) and [Cloud
-Run][run] are very similar. They both execute your application code in
-containers, they both auto-scale, and manage the infrastructure your code runs
+Run][run] are very similar. They both accept container images as deployment input,
+they both auto-scale, and manage the infrastructure your code runs
 on for you. However:
 
 * GAE Flexible is built on VMs, therefore is slower to deploy and scale.
@@ -138,11 +138,7 @@ on for you. However:
 
 [GCF](https://cloud.google.com/functions) lets you deploy snippets of code
 (functions) written in a limited set of programming languages, to natively
-handle HTTP requests or events (Pub/Sub).
-
-Cloud Run only handles HTTP requests. However, it can respond to events that are
-delivered with [Pub/Sub HTTPS push](https://cloud.google.com/pubsub/docs/push).
-(See [this tutorial](https://cloud.google.com/run/docs/tutorials/pubsub)).
+handle HTTP requests or events from many GCP sources.
 
 Cloud Run lets you deploy using any programming language, since it accepts
 container images (more flexible, but also potentially more tedious to develop).
@@ -150,14 +146,23 @@ It also allows using any tool or system library from your application (see
 [here](#can-i-run-my-own-system-libraries-and-tools)) and GCF doesn’t let you
 use such custom system executables.
 
+Cloud Run can only receive HTTP requests or [Pub/Sub push events](https://cloud.google.com/pubsub/docs/push).
+(See [this tutorial](https://cloud.google.com/run/docs/tutorials/pubsub)).
+
 Both services auto-scale your code, manage the infrastructure your code runs on
-and they both run on Google’s serverless infrastructure.
+and they both run on GCP’s serverless infrastructure.
 
 ### How does it compare to AWS Fargate?
 
 [AWS Fargate](https://aws.amazon.com/fargate/) and Cloud Run both let you run
-containers without managing the underlying infrastructure (VMs, clusters).
+containers without managing the underlying VM instances).
 
+Fargate focuses on being a managed replacement for VM instances in Amazon Elastic
+Container Service (ECS). It shares the same API constructs as ECS. In Fargate, you
+are in charge of managing your cluster.
+
+Cloud Run is a standalone compute platform, abstracting cluster management and
+focusing on fast automatic scaling.
 Cloud Run supports running only HTTP servers, and therefore can do request-aware
 autoscaling, as well as scale-to-zero. Fargate autoscaling is CPU/memory based
 and is more suitable for containers that can be long-running (batch, background
@@ -219,13 +224,20 @@ installation.
 
 ### Which applications are suitable for Cloud Run?
 
-[Cloud Run][run] is designed to run **stateless** HTTP web application
-containers. Other kinds of applications may not be fit for Cloud Run.
+[Cloud Run][run] is designed to run **stateless** request-driven containers.
 
-If your application is doing **background processing** while it’s not handling
-requests or storing in-memory state, it may not be suitable.
+This means you can deploy:
 
-### What if my application is doing background tasks?
+* publicly accessible applications: web applications, APIs or webhooks
+* private microservices: internal microservices, data transformation, background
+jobs, potentially triggered asynchronously by Pub/Sub events or Cloud Tasks.
+
+Other kinds of applications may not be fit for Cloud Run.
+
+If your application is doing **processing while it’s not handling
+requests** or storing in-memory state, it may not be suitable.
+
+### What if my application is doing background work outside of request processing?
 
 Your application’s CPU is **[significantly throttled][cpu]** nearly down to zero
 while it's not handling a request.
@@ -272,6 +284,27 @@ currently only `8080`, but it may change in the future.)
 
 If your existing application doesn't allow you to configure port number it
 listens on, Cloud Run currently doesn't allow customizing the `PORT` value.
+
+### Can Cloud Run receive events?
+
+Yes.
+
+Cloud Run integrates securely with Pub/Sub push subscriptions:
+
+* Events are delivered via HTTP to the endpoint of your Cloud Run service.
+* Pub/Sub automatically validates the ownership of the `*.run.app` Cloud Run
+URLs 
+* You can leverage [Pub/Sub push authentication](https://cloud.google.com/pubsub/docs/push#setting_up_for_push_authentication)
+to securely and privatwely push events to Cloud Run services, without exposing
+them publicly to the internet.
+
+Many GCP services like Google Cloud Storage are able to [send events to a 
+Pub/Sub topic](https://cloud.google.com/storage/docs/pubsub-notifications).
+You can publish your own events to a Pub/Sub topic and push them to a Cloud
+Run service.
+
+Follow [this tutorial](https://cloud.google.com/run/docs/tutorials/pubsub) for
+instructions about how to push Pub/Sub events to Cloud Run services.
 
 ### How can I have cronjobs on Cloud Run?
 
