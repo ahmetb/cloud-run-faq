@@ -50,6 +50,7 @@ compatible with Github Flavored Markdown.
   * [Where do I get started to deploy a HTTP web server container?](#where-do-i-get-started-to-deploy-a-http-web-server-container)
   * [How do I make my web application compatible with Cloud Run?](#how-do-i-make-my-web-application-compatible-with-cloud-run)
   * [Can Cloud Run receive events?](#can-cloud-run-receive-events)
+  * [How to configure secrets for Cloud Run applications?](#how-to-configure-secrets-for-cloud-run-applications)
   * [How can I have cronjobs on Cloud Run?](#how-can-i-have-cronjobs-on-cloud-run)
 - [Deploying](#deploying)
   * [How do I continuously deploy to Cloud Run?](#how-do-i-continuously-deploy-to-cloud-run)
@@ -305,6 +306,24 @@ Run service.
 
 Follow [this tutorial](https://cloud.google.com/run/docs/tutorials/pubsub) for
 instructions about how to push Pub/Sub events to Cloud Run services.
+
+### How to configure secrets for Cloud Run applications?
+
+Currently, Cloud Run does not have integration with Cloud KMS or any secret
+stores. Some workarounds you can apply:
+
+- Pass secrets as plain-text environment variables (⚠️ bad idea)
+- Upload secrets to Google Cloud Storage (GCS) and download them in runtime.
+- Pass secrets as _encrypted_ environment variables and decode them using Cloud
+  KMS.
+
+These methods are explained in the [**Secrets in
+Serverless**](https://www.sethvargo.com/secrets-in-serverless/) article.
+
+Alternatively, you can try the experimental
+[**berglas**](https://github.com/GoogleCloudPlatform/berglas) which provides a
+command-line tool to create and store secrets, and a set of libraries to obtain
+the secrets in the runtime.
 
 ### How can I have cronjobs on Cloud Run?
 
