@@ -73,6 +73,8 @@ compatible with Github Flavored Markdown.
   * [Does my application get multiple requests concurrently?](#does-my-application-get-multiple-requests-concurrently)
   * [What if my application can’t handle concurrent requests?](#what-if-my-application-cant-handle-concurrent-requests)
   * [How do I find the right concurrency level for my application?](#how-do-i-find-the-right-concurrency-level-for-my-application)
+  * [Can serve Cloud Run services with Cloud HTTP(S) Load Balancer?](#can-serve-cloud-run-services-with-cloud-https-load-balancer)
+  * [How can I configure CDN for Cloud Run services?](#how-can-i-configure-cdn-for-cloud-run-services)
   * [Does Cloud Run offer SSL/TLS certificates (HTTPS)?](#does-cloud-run-offer-ssltls-certificates-https)
   * [How can I redirect all HTTP traffic to HTTPS?](#how-can-i-redirect-all-http-traffic-to-https)
   * [Is traffic between my app and Google’s load balancer encrypted?](#is-traffic-between-my-app-and-googles-load-balancer-encrypted)
@@ -526,6 +528,27 @@ You should do "load testing" to find out where your application should stop
 handling additional request and additional instances should be created. Read
 [Tuning concurrency](https://cloud.google.com/run/docs/tips#using_concurrency)
 for more.
+
+### Can serve Cloud Run services with Cloud HTTP(S) Load Balancer?
+
+Currently, you can’t route traffic to Cloud Run services via the [Cloud HTTP(S)
+Load Balancer][https-lb].
+
+[https-lb]: https://cloud.google.com/load-balancing/docs/https/
+
+### How can I configure CDN for Cloud Run services?
+
+Since you can’t use [Cloud HTTP(S) Load Balancer][https-lb] with Cloud Run,
+you cannot use [Cloud CDN](https://cloud.google.com/cdn/).
+
+However, you can have CDN from [Firebase
+Hosting](https://firebase.google.com/docs/hosting/) by:
+
+- responding to requests with a [`Cache-Control`
+  header](https://firebase.google.com/docs/hosting/manage-cache#set_cache-control), and
+- configuring a [rewrite configuration in
+  `firebase.json`](https://firebase.google.com/docs/hosting/cloud-run#direct_requests_to_container)
+  of your Firebase app.
 
 ### Does Cloud Run offer SSL/TLS certificates (HTTPS)?
 
