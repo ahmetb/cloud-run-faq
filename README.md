@@ -424,9 +424,12 @@ See [performance optimization
 tips](https://cloud.google.com/run/docs/tips#starting_services_quickly),
 basically:
 
-- keep your container image size small
+- minimize the number and size of the dependencies that your app loads
 - keep your app’s "time to listen for requests" startup time short
 - prevent your application process from crashing
+
+(The size of your container image has almost no impact on cold starts).
+
 
 ### Do I get "warmup requests" like in App Engine?
 
