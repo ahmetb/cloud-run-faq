@@ -155,6 +155,8 @@ Cloud Run can only receive HTTP requests or [Pub/Sub push events](https://cloud.
 Both services auto-scale your code, manage the infrastructure your code runs on
 and they both run on GCP’s serverless infrastructure.
 
+Read more about [choosing between GCP's serverless options](https://cloud.google.com/serverless-options/#header_3)
+
 ### How does it compare to AWS Fargate?
 
 [AWS Fargate](https://aws.amazon.com/fargate/) and Cloud Run both let you run
