@@ -137,7 +137,7 @@ on for you. However:
   [Websockets](https://cloud.google.com/blog/products/application-development/introducing-websockets-support-for-app-engine-flexible-environment)
   in beta, unlike Cloud Run.
   
-Read more about [choosing a container option on GCP](https://cloud.google.com/container-options/)
+Read more about [choosing a container option on GCP](https://cloud.google.com/container-options/).
 
 ### How is it different than Google Cloud Functions?
 
