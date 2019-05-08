@@ -162,18 +162,17 @@ Read more about [choosing between GCP's serverless options](https://cloud.google
 ### How does it compare to AWS Fargate?
 
 [AWS Fargate](https://aws.amazon.com/fargate/) and Cloud Run both let you run
-containers without managing the underlying VM instances).
+containers without managing the underlying infrastructure.
 
-Fargate focuses on being a managed replacement for VM instances in Amazon Elastic
-Container Service (ECS). It shares the same API constructs as ECS. In Fargate, you
-are in charge of managing your cluster.
+Fargate can run a wide range of container workloads, including but not limited
+to HTTP servers, background or long running tasks. It can give you a publicly
+accessible endpoint after deploying your application. Fargate can autoscale
+based on CPU, memory and any additional metric as defined by your application.
 
 Cloud Run is a standalone compute platform, abstracting cluster management and
 focusing on fast automatic scaling.
 Cloud Run supports running only HTTP servers, and therefore can do request-aware
-autoscaling, as well as scale-to-zero. Fargate autoscaling is CPU/memory based
-and is more suitable for containers that can be long-running (batch, background
-etc).
+autoscaling, as well as scale-to-zero.
 
 Therefore, the pricing model is different. On Cloud Run, you only pay while a
 request is being handled.
