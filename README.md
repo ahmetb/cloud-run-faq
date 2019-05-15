@@ -259,8 +259,7 @@ If an application can be packaged into a container image that can run on Linux
 (x86-64), it can be executed on Cloud Run.
 
 Web applications written in languages like Node.js, Python, Go, Java, Ruby, PHP,
-Rust, Kotlin, Swift, C/C++ can work on Cloud Run. _(.NET Core is currently
-not supported due to a bug.)_
+Rust, Kotlin, Swift, C/C++, C# can work on Cloud Run. 
 
 🍄 Users managed to run web servers written in x86 assembly, or [22-year old
 Python
