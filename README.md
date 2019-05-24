@@ -301,7 +301,7 @@ Cloud Run integrates securely with Pub/Sub push subscriptions:
 * Pub/Sub automatically validates the ownership of the `*.run.app` Cloud Run
 URLs 
 * You can leverage [Pub/Sub push authentication](https://cloud.google.com/pubsub/docs/push#setting_up_for_push_authentication)
-to securely and privatwely push events to Cloud Run services, without exposing
+to securely and privately push events to Cloud Run services, without exposing
 them publicly to the internet.
 
 Many GCP services like Google Cloud Storage are able to [send events to a 
@@ -340,7 +340,7 @@ request to your application’s specific URL at an interval you specify.
 
 ### How do I continuously deploy to Cloud Run?
 
-- Tutorial: [Continuous Deployment using Google Cloud Buold](https://cloud.google.com/run/docs/continuous-deployment)
+- Tutorial: [Continuous Deployment using Google Cloud Build](https://cloud.google.com/run/docs/continuous-deployment)
 - Blog: [Deploy using GitLab CI/CD](https://viggy28.dev/article/cloudrun-cicd/)
 
 _(If you know of articles about other CI/CD system integrations, add them here.)_
