@@ -164,18 +164,27 @@ Read more about [choosing between GCP's serverless options](https://cloud.google
 [AWS Fargate](https://aws.amazon.com/fargate/) and Cloud Run both let you run
 containers without managing the underlying infrastructure.
 
-Fargate can run a wide range of container workloads, including but not limited
-to HTTP servers, background or long running tasks. It can give you a publicly
-accessible endpoint after deploying your application. Fargate can autoscale
-based on CPU, memory and any additional metric as defined by your application.
+- Fargate can run a wide range of container workloads, including but not limited
+  to HTTP servers, background or long running tasks.
+- Fargate requires an ECS cluster to run tasks on. This cluster doesn't expose
+  the underlying VM infrastructure to you. However, while using Fargate, you
+  still need to configure infrastructure aspects like VPCs, subnets, load
+  balancers, auto-scaling, health checks and service discovery.
+- Fargate also has a fairly more complex resource model than Cloud Run, it
+  doesn't allow request-based autoscaling, scale-to-zero, concurrency control,
+  and it exposes container instances and their lifecycle to you.
 
 Cloud Run is a standalone compute platform, abstracting cluster management and
-focusing on fast automatic scaling.
-Cloud Run supports running only HTTP servers, and therefore can do request-aware
-autoscaling, as well as scale-to-zero.
+focusing on fast automatic scaling. Cloud Run supports running only HTTP
+servers, and therefore can do request-aware autoscaling, as well as
+scale-to-zero.
 
-Therefore, the pricing model is different. On Cloud Run, you only pay while a
-request is being handled.
+The pricing model is also different:
+
+- On Cloud Run, you only pay while a request is being handled.
+- On AWS Fargate, you pay for CPU/memory while containers are running, and since
+  Fargate doesn't support scale-to-zero, a service receiving no traffic will
+  still incur costs.
 
 ### How does it compare to Azure Container Instances?
 
