@@ -52,6 +52,7 @@ compatible with Github Flavored Markdown.
   * [Can Cloud Run receive events?](#can-cloud-run-receive-events)
   * [How to configure secrets for Cloud Run applications?](#how-to-configure-secrets-for-cloud-run-applications)
   * [How can I have cronjobs on Cloud Run?](#how-can-i-have-cronjobs-on-cloud-run)
+  * [Can I mount storage volumes or disks on Cloud Run?](#can-i-mount-storage-volumes-or-disks-on-cloud-run)
 - [Deploying](#deploying)
   * [How do I continuously deploy to Cloud Run?](#how-do-i-continuously-deploy-to-cloud-run)
   * [Which container registries can I deploy from?](#which-container-registries-can-i-deploy-from)
@@ -343,6 +344,27 @@ the secrets in the runtime.
 If you need to invoke your Cloud Run applications periodically, use
 [Google Cloud Scheduler](https://cloud.google.com/scheduler/). It can make a
 request to your application’s specific URL at an interval you specify.
+
+### Can I mount storage volumes or disks on Cloud Run?
+
+Cloud Run currently doesn’t offer a way to bind mount additional storage volumes
+(like FUSE, or [persistent disks][pd]) on your filesystem. If you’re reading
+data from Google Cloud Storage, instead of using solutions like `gcsfuse`, you
+should use the supported Google Cloud Storage client libraries.
+
+However, Cloud Run **on GKE** allows you to mount any [Kubernetes volumes][vols]
+(such as Kubernetes [Secrets], [ConfigMaps], or [GCE persistent disks via
+PersistentVolumeClaims][pvc]). This requires you to write a Knative Service
+manifest with `volumes`/`volumeMounts` fields. See an example [here][sec-ex],
+and learn more about which [volume types] are available on GKE.
+
+[pd]: https://cloud.google.com/persistent-disk/
+[vols]: https://cloud.google.com/kubernetes-engine/docs/concepts/volumes
+[Secrets]: https://cloud.google.com/kubernetes-engine/docs/concepts/secret
+[ConfigMaps]: https://cloud.google.com/kubernetes-engine/docs/concepts/configmap
+[pvc]: https://cloud.google.com/kubernetes-engine/docs/concepts/persistent-volumes
+[sec-ex]: https://knative.dev/docs/serving/samples/secrets-go/
+[volume types]: https://cloud.google.com/kubernetes-engine/docs/concepts/volumes#types_of_volumes
 
 ## Deploying
 
