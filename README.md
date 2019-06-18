@@ -417,12 +417,13 @@ _revision based traffic splitting_ and _canary deployments_.
 
 ### Can I use `kubectl` to deploy to Cloud Run?
 
-Since Cloud Run supports the [Knative][knative] serving API (currently)
-partially, you could in theory craft a [kubeconfig] file that targets the Cloud
-Run API endpoint to deploy a [Knative Service][ksvc] resource.
+Since Cloud Run supports the [Knative][knative] serving API currently partially,
+you cannot use `kubectl` to deploy [Knative `Service`][ksvc] resources to Cloud
+Run API.
 
-Many fields of the container specification exposed in Knative API, some
-annotations, and operations like patching (`kubectl apply`) are not supported.
+However, since Cloud Run on GKE runs [Knative][knative], you can use `kubectl`
+to deploy Cloud Run `Service`s to your GKE cluster by writing YAML manifests and
+running `kubectl apply`. See Knative tutorials for more info.
 
 [kubeconfig]: https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/
 [ksvc]: https://www.knative.dev/docs/reference/serving-api/#Service
