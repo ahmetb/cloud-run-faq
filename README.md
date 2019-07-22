@@ -399,7 +399,7 @@ If you're deploying from GCR registries on another GCP project:
 - private registries: need to give GCR access to service account used by Cloud
   Run.
 
-To give access, go to [IAM&Admin](https://console.google.com/iam-admin/iam) on
+To give access, go to [IAM&Admin](https://console.cloud.google.com/iam-admin/iam) on
 Cloud Console, and find the email for "Google Cloud Run Service Agent". Then
 follow [this
 document](https://cloud.google.com/container-registry/docs/access-control#granting_users_and_other_projects_access_to_a_registry)
