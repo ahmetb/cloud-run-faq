@@ -96,6 +96,7 @@ compatible with Github Flavored Markdown.
   * [Where can I find the "instance ID" of my container?](#where-can-i-find-the-instance-id-of-my-container)
   * [How can I find the number of instances running?](#how-can-i-find-the-number-of-instances-running)
   * [How can my service can tell it is running on Cloud Run?](#how-can-my-service-can-tell-it-is-running-on-cloud-run)
+  * [Is there a way to get static IP for outbound requests?](#is-there-a-way-to-get-static-ip-for-outbound-requests)
 - [Monitoring and Logging](#monitoring-and-logging)
   * [Where do I write my application logs?](#where-do-i-write-my-application-logs)
   * [How can I have structured logs?](#how-can-i-have-structured-logs)
@@ -747,6 +748,15 @@ endpoints like
 determine if you are on Cloud Run. However, this will not distinguish "Cloud
 Run" vs "Cloud Run on GKE" as the metadata service is available on GKE nodes as
 well.
+
+### Is there a way to get static IP for outbound requests?
+
+Since, currently Cloud NAT or Serverless VPC Connector are not supported on
+Cloud Run, your applications will not get a static IP for outbound connections.
+
+However, [there is a workaround](https://ahmet.im/blog/cloud-run-static-ip/)
+to route the traffic through a Google Compute Engine instance by running a
+persistent SSH tunnel inside the container and making your applications use it.
 
 ## Monitoring and Logging
 
