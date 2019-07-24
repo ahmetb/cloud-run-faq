@@ -405,6 +405,8 @@ follow [this
 document](https://cloud.google.com/container-registry/docs/access-control#granting_users_and_other_projects_access_to_a_registry)
 to give this service account GCR access on the other project.
 
+**Tip :** If your account has admin rights on both projects, deploying an existing image to a another GCP's registry is easy as setting a new tag to image of second registry URL (`docker tag <image-id> gcr.io/<other-project-id>/<your-service-name>`) and then `docker push <image-id>`. In that case `push` command will not upload image files from your machine for a second time, it will just copy from previously uploaded GCR. Both registries don't even have to be on the same region.
+
 ### How can I serve traffic multiple revisions?
 
 If you updated your Cloud Run service, you probably realized it creates a new
