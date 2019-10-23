@@ -694,10 +694,9 @@ to determine when the system call was made in your app.
 
 ### Which executable ABIs are supported?
 
-Applications compiled for Linux in 32-bit or 64-bit are supported. To be
-precise, ELF executables compiled to
-[x84-64](https://en.wikipedia.org/wiki/X86-64). See [Container
-Contract][container-contract].
+Applications compiled for 64-bit Linux are supported. To be precise, ELF
+executables compiled to [x84-64](https://en.wikipedia.org/wiki/X86-64). See
+[Container Contract][container-contract].
 
 [container-contract]: https://cloud.google.com/run/docs/reference/container-contract
 [cpu]: https://cloud.google.com/run/docs/reference/container-contract#cpu
