@@ -40,8 +40,8 @@ compatible with Github Flavored Markdown.
   * [How is it different than Google Cloud Functions?](#how-is-it-different-than-google-cloud-functions)
   * [How does it compare to AWS Fargate?](#how-does-it-compare-to-aws-fargate)
   * [How does it compare to Azure Container Instances?](#how-does-it-compare-to-azure-container-instances)
-  * [What is “Cloud Run on GKE”?](#what-is-cloud-run-on-gke)
-  * [Is Cloud Run hosted Knative?](#is-cloud-run-hosted-knative)
+  * [What is “Cloud Run on Anthos?](#what-is-cloud-run-on-anthos)
+  * [Is "Cloud Run "hosted Knative?](#is-cloud-run-hosted-knative)
 - [Developing Applications](#developing-applications)
   * [Which applications are suitable for Cloud Run?](#which-applications-are-suitable-for-cloud-run)
   * [What if my application is doing background work outside of request processing?](#what-if-my-application-is-doing-background-work-outside-of-request-processing)
@@ -138,8 +138,9 @@ on for you. However:
 * GAE Flexible supports
   [Websockets](https://cloud.google.com/blog/products/application-development/introducing-websockets-support-for-app-engine-flexible-environment)
   in beta, unlike Cloud Run.
-  
-Read more about [choosing a container option on GCP](https://cloud.google.com/container-options/).
+
+Read more about [choosing a container option on
+GCP](https://cloud.google.com/container-options/).
 
 ### How is it different than Google Cloud Functions?
 
@@ -201,14 +202,15 @@ to zero. ACI is
 for long-running containers. Therefore, the pricing model is different. On Cloud
 Run, you only pay while a request is being handled.
 
-### What is “Cloud Run on GKE”?
+### What is “Cloud Run on Anthos?
 
-["Cloud Run on GKE"][crogke] gives you the same Cloud Run experience on your
-[Kubernetes](https://kubernetes.io) clusters running on
-[GKE](https://cloud.google.com/kubernetes-engine/). This gives you the freedom
-to choose where you want to deploy your applications.
+["Cloud Run on Anthos"][crogke] gives you the same Cloud Run experience on your
+[Kubernetes](https://kubernetes.io) clusters on [Anthos] (either on GCP with
+[GKE], or on-prem/other clouds). This gives you the freedom to choose where you
+want to deploy your applications.
 
-Both Cloud Run and "Cloud Run on GKE" have:
+"Cloud Run" and "Cloud Run on Anthos" are the same product, but running in
+different places:
 
 * the same application format (container images)
 * the same deployment/management experience (`gcloud` or Cloud Console)
@@ -218,14 +220,16 @@ Look at [this diagram](https://twitter.com/ahmetb/status/1116041166359654400),
 or [**watch this video**](https://www.youtube.com/watch?v=RVdhyprptTQ) to decide
 how to choose between the two.
 
-Cloud Run on GKE basically installs and manages a Knative installation (with
+Cloud Run on Anthos basically installs and manages a Knative installation (with
 some additional GCP-specific components for monitoring etc) on your Kubernetes
 cluster so that you don’t have to worry about installing and managing Knative
 yourself.
 
 [knative]: https://www.knative.dev/
+[GKE]: https://cloud.google.com/kubernetes-engine/
+[Anthos]: https://cloud.google.com/anthos/
 
-### Is Cloud Run hosted Knative?
+### Is "Cloud Run "hosted Knative?
 
 Sort of.
 
@@ -234,8 +238,8 @@ API](https://www.knative.dev/docs/reference/serving-api/). However, the
 underlying implementation of the functionality could differ from the open source
 [Knative][knative] implementation.
 
-With [Cloud Run on GKE](#what-is-cloud-run-on-gke), you actually get a Knative
-installation.
+With [Cloud Run on Anthos](#what-is-cloud-run-on-gke), you actually get a
+Knative installation (managed by Google) on your Kubernetes/[GKE] cluster
 
 ## Developing Applications
 
@@ -422,7 +426,7 @@ Since Cloud Run supports the [Knative][knative] serving API currently partially,
 you cannot use `kubectl` to deploy [Knative `Service`][ksvc] resources to Cloud
 Run API.
 
-However, since Cloud Run on GKE runs [Knative][knative], you can use `kubectl`
+However, since Cloud Run on Anthos runs [Knative][knative], you can use `kubectl`
 to deploy Cloud Run `Service`s to your GKE cluster by writing YAML manifests and
 running `kubectl apply`. See Knative tutorials for more info.
 
@@ -625,22 +629,30 @@ $ curl -v https://<url>
 
 ### Is gRPC supported on Cloud Run?
 
-Cloud Run supports unary [gRPC](https://grpc.io), while streaming is not yet supported. However, both unary and streaming gRPC work on [Cloud Run on GKE][crogke].
+Cloud Run supports [unary
+calls](https://grpc.io/docs/guides/concepts/#unary-rpc) on
+[gRPC](https://grpc.io). Streaming RPCs are not yet
+supported.
+
+Since [Cloud Run on GKE][crogke] runs on GCE networking stack, gRPC works
+natively on that platform.
 
 [crogke]: https://cloud.google.com/run/docs/gke/setup
 
 ### Are WebSockets supported on Cloud Run?
 
 [WebSockets](https://en.wikipedia.org/wiki/WebSocket) are currently not
-supported on Cloud Run. However, [Cloud Run on GKE][crogke] supports running
-applications capable of doing WebSockets.
+supported on Cloud Run fully managed.
+
+However, running WebSockets currently works on [Cloud Run on Anthos][crogke]
+because of its GCE-based native networking layer.
 
 ## Autoscaling
 
 ### Does my Cloud Run service scale to zero?
 
-Yes, although you can’t really see how many container instances are running your
-service. When your service is not receiving requests, you are not paying for anything.
+Yes. When your service is not receiving requests, you are not paying for
+anything.
 
 Therefore, after not receiving any requests for a while, the first request may
 observe [cold start](#cold-starts) latency.
@@ -726,12 +738,15 @@ during the startup of your process and store it in a variable.
 
 ### How can I find the number of instances running?
 
-Cloud Run currently does not offer you a way to learn the number of container
-instances running at a time.
+You can't see the number of instances running at a time on Cloud Run.
 
-Ideally you should not care about this in a serverless world where your
-applications autoscale based on traffic patterns better and you only pay while
-a request is being handled (not the idle instance time).
+However, you can use the **Billable conatiner instance time** metric on Cloud
+Run service dashboard to infer this information.
+
+Ideally you should not care about "instant value" of number of instances in a
+serverless world, since your applications autoscale based on traffic patterns
+better and you only pay while a request is being handled (not the idle instance
+time).
 
 ### How can my service can tell it is running on Cloud Run?
 
@@ -744,7 +759,7 @@ metadata](https://cloud.google.com/appengine/docs/standard/java/accessing-instan
 endpoints like
 `http://metadata.google.internal/computeMetadata/v1/project/project-id` to
 determine if you are on Cloud Run. However, this will not distinguish "Cloud
-Run" vs "Cloud Run on GKE" as the metadata service is available on GKE nodes as
+Run" vs "Cloud Run on Anthos" as the metadata service is available on GKE nodes as
 well.
 
 ### Is there a way to get static IP for outbound requests?
