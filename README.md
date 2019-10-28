@@ -40,7 +40,7 @@ compatible with Github Flavored Markdown.
   * [How is it different than Google Cloud Functions?](#how-is-it-different-than-google-cloud-functions)
   * [How does it compare to AWS Fargate?](#how-does-it-compare-to-aws-fargate)
   * [How does it compare to Azure Container Instances?](#how-does-it-compare-to-azure-container-instances)
-  * [What is “Cloud Run on Anthos?](#what-is-cloud-run-on-anthos)
+  * [What is “Cloud Run on Anthos"?](#what-is-cloud-run-on-anthos)
   * [Is "Cloud Run "hosted Knative?](#is-cloud-run-hosted-knative)
 - [Developing Applications](#developing-applications)
   * [Which applications are suitable for Cloud Run?](#which-applications-are-suitable-for-cloud-run)
@@ -203,7 +203,7 @@ to zero. ACI is
 for long-running containers. Therefore, the pricing model is different. On Cloud
 Run, you only pay while a request is being handled.
 
-### What is “Cloud Run on Anthos?
+### What is “Cloud Run on Anthos"?
 
 ["Cloud Run on Anthos"][crogke] gives you the same Cloud Run experience on your
 [Kubernetes](https://kubernetes.io) clusters on [Anthos] (either on GCP with
