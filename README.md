@@ -58,6 +58,7 @@ compatible with Github Flavored Markdown.
   * [Which container registries can I deploy from?](#which-container-registries-can-i-deploy-from)
   * [How can I deploy from other GCR registries?](#how-can-i-deploy-from-other-gcr-registries)
   * [How can I serve traffic multiple revisions?](#how-can-i-serve-traffic-multiple-revisions)
+  * [How can I specify Google credentials in Cloud Run applications?](#how-can-i-specify-google-credentials-in-cloud-run-applications)
   * [Can I use `kubectl` to deploy to Cloud Run?](#can-i-use-kubectl-to-deploy-to-cloud-run)
 - [Cold Starts](#cold-starts)
   * [Does Cloud Run have cold starts?](#does-cloud-run-have-cold-starts)
@@ -420,15 +421,36 @@ However, Cloud Run (currently) only supports serving traffic from the last
 healthy revision of your service. Therefore, it currently does not support
 _revision based traffic splitting_ and _canary deployments_.
 
+This is subject to change soon.
+
+### How can I specify Google credentials in Cloud Run applications?
+
+For applications running on Cloud Run, you don't need to deliver JSON keys for
+IAM Service Accounts, or set `GOOGLE_APPLICATION_CREDENTIALS` environment
+variable.
+
+Just specify the service account (`--service-account`) you want your application
+to use automatically while deploying the app. See [configuring service
+identity][ident].
+
+[ident]: https://cloud.google.com/run/docs/securing/service-identity
+
 ### Can I use `kubectl` to deploy to Cloud Run?
 
-Since Cloud Run supports the [Knative][knative] serving API currently partially,
-you cannot use `kubectl` to deploy [Knative `Service`][ksvc] resources to Cloud
-Run API.
+Cloud Run supports the [Knative][knative] Serving API. However, currently some
+parts of Kubernetes Discovery API required by `kubectl` are not yet offered on
+Cloud Run API.
 
-However, since Cloud Run on Anthos runs [Knative][knative], you can use `kubectl`
-to deploy Cloud Run `Service`s to your GKE cluster by writing YAML manifests and
-running `kubectl apply`. See Knative tutorials for more info.
+As a solution, you can write your [Knative `Service`][ksvc] resource as a .yaml
+file and use the following command to deploy to Cloud Run:
+
+```sh
+gcloud beta run services replace --platform=managed <file.yaml>
+```
+
+Since "Cloud Run on Anthos" runs [Knative][knative] natively, you can use
+`kubectl` to deploy [Knative `Service`s][ksvc] to your GKE cluster by writing YAML
+manifests and running `kubectl apply`. See Knative tutorials for more info.
 
 [kubeconfig]: https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/
 [ksvc]: https://www.knative.dev/docs/reference/serving-api/#Service
