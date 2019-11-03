@@ -762,7 +762,7 @@ during the startup of your process and store it in a variable.
 
 You can't see the number of instances running at a time on Cloud Run.
 
-However, you can use the **Billable conatiner instance time** metric on Cloud
+However, you can use the **Billable container instance time** metric on Cloud
 Run service dashboard to infer this information.
 
 Ideally you should not care about "instant value" of number of instances in a
