@@ -513,15 +513,18 @@ requests every few minutes.
 
 ### How can I tell if a request was a “cold start”?
 
-Each request to Cloud Run services is logged to Stackdriver logging, with an
+> **UPDATE:** Cloud Run no longer marks request logs with information
+> about whether they caused a cold start or not.
+
+~~Each request to Cloud Run services is logged to Stackdriver logging, with an
 indicator whether instance was "warm" or "cold" during that request (see
-[Viewing Logs][logging]).
+[Viewing Logs][logging]).~~
 
 [logging]: https://cloud.google.com/run/docs/logging
 
-If you view logs from Cloud Run console, these requests are marked (and if you
+~~If you view logs from Cloud Run console, these requests are marked (and if you
 view them in Stackdriver Logging, you can see the structured log label
-indicating "cold" request):
+indicating "cold" request):~~
 
 ![Cold Start Log](img/cold-start-log.png)
 
