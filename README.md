@@ -684,10 +684,7 @@ observe [cold start](#cold-starts) latency.
 
 ### How can I limit the total number of instances for my application?
 
-You currently can’t.
-
-Cloud Run currently does not provide an option to limit the count of container
-instances your application runs on.
+By setting the `Maximum number of instances` parameter when deploying a new revision.
 
 ### What’s the upper scaling limit for Cloud Run?
 
