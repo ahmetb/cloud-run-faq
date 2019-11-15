@@ -624,11 +624,7 @@ Encrypt](https://letsencrypt.org/) to get a certificate for your domains.
 
 ### How can I redirect all HTTP traffic to HTTPS?
 
-Unfortunately, Cloud Run does not offer a built-in feature to redirect all
-`http://` traffic to `https://`. However, your application can readt the
-`X-Forwarded-Proto` header and when it is `http`, make an HTTP 301 response to
-redirect to the `https://` endpoint.
-<sup>([source](https://stackoverflow.com/questions/55699148/how-to-redirect-all-http-traffic-to-https-in-google-cloud-run))</sup>
+This is built in and required. To make Cloud Run secure by default, Cloud Run services will only be accessible via HTTPS. Any HTTP requests are automatically returned an HTTP 302 response pointing to the HTTPS version of the current URL. This was rolled out as a change in the beta service in August 2019.
 
 ### Is traffic between my app and Google’s load balancer encrypted?
 
