@@ -41,7 +41,7 @@ compatible with Github Flavored Markdown.
   * [How does it compare to AWS Fargate?](#how-does-it-compare-to-aws-fargate)
   * [How does it compare to Azure Container Instances?](#how-does-it-compare-to-azure-container-instances)
   * [What is "Cloud Run on Anthos"?](#what-is-cloud-run-on-anthos)
-  * [Is "Cloud Run "hosted Knative?](#is-cloud-run-hosted-knative)
+  * [Is Cloud Run a "hosted Knative"?](#is-cloud-run-a-hosted-knative)
 - [Developing Applications](#developing-applications)
   * [Which applications are suitable for Cloud Run?](#which-applications-are-suitable-for-cloud-run)
   * [What if my application is doing background work outside of request processing?](#what-if-my-application-is-doing-background-work-outside-of-request-processing)
@@ -230,7 +230,7 @@ yourself.
 [GKE]: https://cloud.google.com/kubernetes-engine/
 [Anthos]: https://cloud.google.com/anthos/
 
-### Is "Cloud Run "hosted Knative?
+### Is Cloud Run a "hosted Knative"?
 
 Sort of.
 
