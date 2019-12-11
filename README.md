@@ -221,6 +221,8 @@ Look at [this diagram](https://twitter.com/ahmetb/status/1116041166359654400),
 or [**watch this video**](https://www.youtube.com/watch?v=RVdhyprptTQ) to decide
 how to choose between the two.
 
+![](https://storage.googleapis.com/gweb-cloudblog-publish/images/developer_and_operator.0316026505360460.max-700x700.png)
+
 Cloud Run on Anthos basically installs and manages a Knative installation (with
 some additional GCP-specific components for monitoring etc) on your Kubernetes
 cluster so that you don’t have to worry about installing and managing Knative
