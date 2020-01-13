@@ -686,8 +686,8 @@ By setting the `Maximum number of instances` parameter when deploying a new revi
 
 ### What’s the upper scaling limit for Cloud Run?
 
-Each Cloud Run service can scale [up to 1000 container instances][lim] during
-the **beta** period. Each container instance can handle [up to 80 simultaneous
+Each Cloud Run service can scale by default [up to 1000 container instances][lim], a limit that
+can be increase via a quota request. Each container instance can handle [up to 80 simultaneous
 requests][lim].
 
 ## Runtime
