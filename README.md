@@ -347,6 +347,10 @@ Alternatively, you can try the experimental
 command-line tool to create and store secrets, and a set of libraries to obtain
 the secrets in the runtime.
 
+Another option is to try the pre-release Google Cloud [Secret Manager](https://cloud.google.com/secret-manager/)
+which provides a secure way of managing secrets, and UI and extensive libraries 
+support to set/get secrets programmatically.
+
 ### How can I have cronjobs on Cloud Run?
 
 If you need to invoke your Cloud Run applications periodically, use
