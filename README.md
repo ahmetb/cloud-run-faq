@@ -331,21 +331,15 @@ instructions about how to push Pub/Sub events to Cloud Run services.
 
 ### How to configure secrets for Cloud Run applications?
 
-Currently, Cloud Run does not have integration with Cloud KMS or any secret
-stores. Some workarounds you can apply:
+You can use [Secret Manager](https://cloud.google.com/secret-manager/docs/) with
+Cloud Run. Read how to write code and set permissions to access the secrets from
+your Cloud Run app in the
+[documentation](https://cloud.google.com/secret-manager/docs/creating-and-accessing-secrets).
 
-- Pass secrets as plain-text environment variables (⚠️ bad idea)
-- Upload secrets to Google Cloud Storage (GCS) and download them in runtime.
-- Pass secrets as _encrypted_ environment variables and decode them using Cloud
-  KMS.
-
-These methods are explained in the [**Secrets in
-Serverless**](https://www.sethvargo.com/secrets-in-serverless/) article.
-
-Alternatively, you can try the experimental
-[**berglas**](https://github.com/GoogleCloudPlatform/berglas) which provides a
-command-line tool to create and store secrets, and a set of libraries to obtain
-the secrets in the runtime.
+Alternatively, if you'd like to store secrets in Cloud Storage (GCS) using Cloud
+KMS envelope encryption, check out the
+[Berglas](https://github.com/GoogleCloudPlatform/berglas) tool and library
+(Berglas also has support for Secret Manager).
 
 ### How can I have cronjobs on Cloud Run?
 
