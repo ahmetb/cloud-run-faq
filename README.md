@@ -22,14 +22,10 @@
 -----
 
 <!--
-TODO(ahmetb): All the markdown ToC extensions for vscode I tried deeply suck.
-They are either superbuggy/unmaintained, or can't generate href targets
-compatible with Github Flavored Markdown.
--->
-
-<!--
   ⚠️ DO NOT UPDATE THE TABLE OF CONTENTS MANUALLY ️️⚠️
-  run `npx markdown-toc -i README.md`
+  run `npx markdown-toc -i README.md`.
+
+  Please stick to 80-character line wraps as much as you can.
 -->
 
 <!-- toc -->
@@ -75,6 +71,7 @@ compatible with Github Flavored Markdown.
   * [Does my application get multiple requests concurrently?](#does-my-application-get-multiple-requests-concurrently)
   * [What if my application can’t handle concurrent requests?](#what-if-my-application-cant-handle-concurrent-requests)
   * [How do I find the right concurrency level for my application?](#how-do-i-find-the-right-concurrency-level-for-my-application)
+  * [Can I make request to a specific container instance?](#can-i-make-request-to-a-specific-container-instance)
   * [Can serve Cloud Run services with Cloud HTTP(S) Load Balancer?](#can-serve-cloud-run-services-with-cloud-https-load-balancer)
   * [How can I configure CDN for Cloud Run services?](#how-can-i-configure-cdn-for-cloud-run-services)
   * [Does Cloud Run offer SSL/TLS certificates (HTTPS)?](#does-cloud-run-offer-ssltls-certificates-https)
@@ -585,10 +582,18 @@ handling additional request and additional instances should be created. Read
 [Tuning concurrency](https://cloud.google.com/run/docs/tips#using_concurrency)
 for more.
 
+### Can I make request to a specific container instance?
+
+No, Cloud Run does not offer a "sticky session" primitive. All requests are
+load balanced between available container instances.
+
 ### Can serve Cloud Run services with Cloud HTTP(S) Load Balancer?
 
 Currently, you can’t route traffic to Cloud Run services via the [Cloud HTTP(S)
-Load Balancer][https-lb].
+Load Balancer][https-lb] (a.k.a. GCLB) yet.
+
+Therefore many features only available on Load Balancers are not yet available
+for Cloud Run applications (e.g. CDN, IAP, Cloud Armor, URL Maps...).
 
 [https-lb]: https://cloud.google.com/load-balancing/docs/https/
 
@@ -620,7 +625,12 @@ Encrypt](https://letsencrypt.org/) to get a certificate for your domains.
 
 ### How can I redirect all HTTP traffic to HTTPS?
 
-This is built in and required. To make Cloud Run secure by default, Cloud Run services will only be accessible via HTTPS. Any HTTP requests are automatically returned an HTTP 302 response pointing to the HTTPS version of the current URL. This was rolled out as a change in the beta service in August 2019.
+This is built in and required. To make Cloud Run secure by default, Cloud Run
+services will only be accessible via HTTPS.
+
+Any HTTP requests are automatically returned an HTTP 302 response pointing to
+the HTTPS version of the current URL. This was rolled out as a change in the
+beta service in August 2019.
 
 ### Is traffic between my app and Google’s load balancer encrypted?
 
