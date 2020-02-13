@@ -12,12 +12,15 @@
 - **Trouble using Cloud Run?** Ask a question [on Stack  Overflow][so].
 - **Check out** [awesome-cloudrun][awesome] for a curated list of Cloud Run
   articles, tools and examples.
+- **Follow me** [on Twitter][twitter] as I frequently share Cloud Run news
+  and tips.
 
 [issue]: https://github.com/ahmetb/cloud-run-faq/issues
 [run]: https://cloud.google.com/run/
 [docs]: https://cloud.google.com/run/docs
 [so]: https://stackoverflow.com/questions/ask?tags=google-cloud-run
 [awesome]: https://github.com/steren/awesome-cloudrun
+[twitter]: https://twitter.com/ahmetb
 
 -----
 
