@@ -454,7 +454,11 @@ manifests and running `kubectl apply`. See Knative tutorials for more info.
 
 ### Can I use Terraform to deploy to Cloud Run?
 
-Yes, you can. Terraform provides several [resources](https://www.terraform.io/docs/providers/google/r/cloud_run_service.html) which enable you to define a Cloud run deployment in Terraform.
+Yes. Terraform provides
+[resources](https://www.terraform.io/docs/providers/google/r/cloud_run_service.html)
+to define a Cloud Run deployment in Terraform. Also see [this blog
+post](https://www.sethvargo.com/configuring-cloud-run-with-terraform/) and
+[sample app](https://github.com/sethvargo/terraform-cloud-run-demo).
 
 ## Cold Starts
 
