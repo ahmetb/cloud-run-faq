@@ -59,6 +59,7 @@
   * [How can I serve traffic from multiple revisions?](#how-can-i-serve-traffic-from-multiple-revisions)
   * [How can I specify Google credentials in Cloud Run applications?](#how-can-i-specify-google-credentials-in-cloud-run-applications)
   * [Can I use `kubectl` to deploy to Cloud Run?](#can-i-use-kubectl-to-deploy-to-cloud-run)
+  * [Can I use Terraform to deploy to Cloud Run?](#can-i-use-terraform-to-deploy-to-cloud-run)
 - [Cold Starts](#cold-starts)
   * [Does Cloud Run have cold starts?](#does-cloud-run-have-cold-starts)
   * [When will my service scale to zero?](#when-will-my-service-scale-to-zero)
