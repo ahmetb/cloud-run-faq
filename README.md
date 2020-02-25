@@ -59,6 +59,7 @@
   * [How can I serve traffic from multiple revisions?](#how-can-i-serve-traffic-from-multiple-revisions)
   * [How can I specify Google credentials in Cloud Run applications?](#how-can-i-specify-google-credentials-in-cloud-run-applications)
   * [Can I use `kubectl` to deploy to Cloud Run?](#can-i-use-kubectl-to-deploy-to-cloud-run)
+  * [Can I use Terraform to deploy to Cloud Run?](#can-i-use-terraform-to-deploy-to-cloud-run)
 - [Cold Starts](#cold-starts)
   * [Does Cloud Run have cold starts?](#does-cloud-run-have-cold-starts)
   * [When will my service scale to zero?](#when-will-my-service-scale-to-zero)
@@ -450,6 +451,10 @@ manifests and running `kubectl apply`. See Knative tutorials for more info.
 
 [kubeconfig]: https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/
 [ksvc]: https://www.knative.dev/docs/reference/serving-api/#Service
+
+### Can I use Terraform to deploy to Cloud Run?
+
+Yes, you can. Terraform provides several [resources](https://www.terraform.io/docs/providers/google/r/cloud_run_service.html) which enable you to define a Cloud run deployment in Terraform.
 
 ## Cold Starts
 
