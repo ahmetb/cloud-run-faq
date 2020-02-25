@@ -451,6 +451,10 @@ manifests and running `kubectl apply`. See Knative tutorials for more info.
 [kubeconfig]: https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/
 [ksvc]: https://www.knative.dev/docs/reference/serving-api/#Service
 
+### Can I use Terraform to deploy to Cloud Run?
+
+Yes, you can. Terraform provides several [resources](https://www.terraform.io/docs/providers/google/r/cloud_run_service.html) which enable you to define a Cloud run deployment in Terraform.
+
 ## Cold Starts
 
 ### Does Cloud Run have cold starts?
