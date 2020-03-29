@@ -68,7 +68,7 @@
   * [How to keep a Cloud Run service “warm”?](#how-to-keep-a-cloud-run-service-warm)
   * [How can I tell if a request was a “cold start”?](#how-can-i-tell-if-a-request-was-a-cold-start)
 - [Serving Traffic](#serving-traffic)
-  * [Which protocols can my application serve traffic on?](#which-protocols-can-my-application-serve-traffic-on)
+  * [Which network protocols are supported on Cloud Run?](#which-network-protocols-are-supported-on-cloud-run)
   * [What's the maximum request execution time limit?](#whats-the-maximum-request-execution-time-limit)
   * [Does my service get a domain name on Cloud Run?](#does-my-service-get-a-domain-name-on-cloud-run)
   * [Are all Cloud Run services publicly accessible?](#are-all-cloud-run-services-publicly-accessible)
@@ -536,7 +536,7 @@ indicating "cold" request):~~
 
 ## Serving Traffic
 
-### Which protocols can my application serve traffic on?
+### Which network protocols are supported on Cloud Run?
 
 Cloud Run only supports HTTP/1.x and HTTP/2 (including gRPC) over TLS. Other
 TCP and UDP based protocols are not supported. This means, you can't run your
