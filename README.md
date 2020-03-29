@@ -39,7 +39,7 @@
   * [How is it different than Google Cloud Functions?](#how-is-it-different-than-google-cloud-functions)
   * [How does it compare to AWS Fargate?](#how-does-it-compare-to-aws-fargate)
   * [How does it compare to Azure Container Instances?](#how-does-it-compare-to-azure-container-instances)
-  * [What is "Cloud Run on Anthos"?](#what-is-cloud-run-on-anthos)
+  * [What is "Cloud Run for Anthos"?](#what-is-cloud-run-for-anthos)
   * [Is Cloud Run a "hosted Knative"?](#is-cloud-run-a-hosted-knative)
 - [Developing Applications](#developing-applications)
   * [Which applications are suitable for Cloud Run?](#which-applications-are-suitable-for-cloud-run)
@@ -68,6 +68,7 @@
   * [How to keep a Cloud Run service “warm”?](#how-to-keep-a-cloud-run-service-warm)
   * [How can I tell if a request was a “cold start”?](#how-can-i-tell-if-a-request-was-a-cold-start)
 - [Serving Traffic](#serving-traffic)
+  * [Which protocols can my application serve traffic on?](#which-protocols-can-my-application-serve-traffic-on)
   * [What's the maximum request execution time limit?](#whats-the-maximum-request-execution-time-limit)
   * [Does my service get a domain name on Cloud Run?](#does-my-service-get-a-domain-name-on-cloud-run)
   * [Are all Cloud Run services publicly accessible?](#are-all-cloud-run-services-publicly-accessible)
@@ -204,14 +205,14 @@ to zero. ACI is
 for long-running containers. Therefore, the pricing model is different. On Cloud
 Run, you only pay while a request is being handled.
 
-### What is "Cloud Run on Anthos"?
+### What is "Cloud Run for Anthos"?
 
-["Cloud Run on Anthos"][crogke] gives you the same Cloud Run experience on your
+["Cloud Run for Anthos"][crogke] gives you the same Cloud Run experience on your
 [Kubernetes](https://kubernetes.io) clusters on [Anthos] (either on GCP with
 [GKE], or on-prem/other clouds). This gives you the freedom to choose where you
 want to deploy your applications.
 
-"Cloud Run" and "Cloud Run on Anthos" are the same product, but running in
+"Cloud Run" and "Cloud Run for Anthos" are the same product, but running in
 different places:
 
 * the same application format (container images)
@@ -224,7 +225,7 @@ how to choose between the two.
 
 ![](https://storage.googleapis.com/gweb-cloudblog-publish/images/developer_and_operator.0316026505360460.max-700x700.png)
 
-Cloud Run on Anthos basically installs and manages a Knative installation (with
+Cloud Run for Anthos basically installs and manages a Knative installation (with
 some additional GCP-specific components for monitoring etc) on your Kubernetes
 cluster so that you don’t have to worry about installing and managing Knative
 yourself.
@@ -242,7 +243,7 @@ API](https://www.knative.dev/docs/reference/serving-api/). However, the
 underlying implementation of the functionality could differ from the open source
 [Knative][knative] implementation.
 
-With [Cloud Run on Anthos](#what-is-cloud-run-on-anthos), you actually get a
+With [Cloud Run for Anthos](#what-is-cloud-run-on-anthos), you actually get a
 Knative installation (managed by Google) on your Kubernetes/[GKE] cluster
 
 ## Developing Applications
@@ -355,7 +356,7 @@ Cloud Run currently doesn’t offer a way to bind mount additional storage volum
 data from Google Cloud Storage, instead of using solutions like `gcsfuse`, you
 should use the supported Google Cloud Storage client libraries.
 
-However, Cloud Run **on GKE** allows you to mount Kubernetes [Secrets] and
+However, Cloud Run **for Anthos** allows you to mount Kubernetes [Secrets] and
 [ConfigMaps], but **this is not yet fully supported**. See an example
 [here][sec-ex] about mounting [Secrets] to a Service running on GKE.
 
@@ -445,7 +446,7 @@ file and use the following command to deploy to Cloud Run:
 gcloud beta run services replace --platform=managed <file.yaml>
 ```
 
-Since "Cloud Run on Anthos" runs [Knative][knative] natively, you can use
+Since "Cloud Run for Anthos" runs [Knative][knative] natively, you can use
 `kubectl` to deploy [Knative `Service`s][ksvc] to your GKE cluster by writing YAML
 manifests and running `kubectl apply`. See Knative tutorials for more info.
 
@@ -534,6 +535,15 @@ indicating "cold" request):~~
 ![Cold Start Log](img/cold-start-log.png)
 
 ## Serving Traffic
+
+### Which protocols can my application serve traffic on?
+
+Cloud Run only supports HTTP/1.x and HTTP/2 (including gRPC) over TLS. Other
+TCP and UDP based protocols are not supported. This means, you can't run your
+arbitrary TCP based application, or a Redis/Memcached server on Cloud Run.
+
+Also see: [HTTP/2](#is-http2-supported-on-cloud-run),
+[gRPC](#is-grpc-supported-on-cloud-run)
 
 ### What's the maximum request execution time limit?
 
@@ -673,7 +683,7 @@ calls](https://grpc.io/docs/guides/concepts/#unary-rpc) on
 [gRPC](https://grpc.io). Streaming RPCs are not yet
 supported.
 
-Since [Cloud Run on GKE][crogke] runs on GCE networking stack, gRPC works
+Since [Cloud Run for Anthos][crogke] runs on GCE networking stack, gRPC works
 natively on that platform.
 
 [crogke]: https://cloud.google.com/run/docs/gke/setup
@@ -683,7 +693,7 @@ natively on that platform.
 [WebSockets](https://en.wikipedia.org/wiki/WebSocket) are currently not
 supported on Cloud Run fully managed.
 
-However, running WebSockets currently works on [Cloud Run on Anthos][crogke]
+However, running WebSockets currently works on [Cloud Run for Anthos][crogke]
 because of its GCE-based native networking layer.
 
 ## Autoscaling
@@ -795,8 +805,8 @@ metadata](https://cloud.google.com/appengine/docs/standard/java/accessing-instan
 endpoints like
 `http://metadata.google.internal/computeMetadata/v1/project/project-id` to
 determine if you are on Cloud Run. However, this will not distinguish "Cloud
-Run" vs "Cloud Run on Anthos" as the metadata service is available on GKE nodes as
-well.
+Run" vs "Cloud Run for Anthos" as the metadata service is available on GKE nodes
+as well.
 
 ### Is there a way to get static IP for outbound requests?
 
