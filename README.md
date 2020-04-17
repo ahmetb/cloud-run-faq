@@ -1,9 +1,14 @@
 # [Google Cloud Run][run] - FAQ
 
-> ⚠️ This repository is a **community-maintained** knowledge base. It does not
-> reflect Google’s product roadmap. Refer to the [**Cloud Run
-> documentation**][docs] for the most up-to-date information, as this page may
-> go out of date.
+> ⚠️ Beware: This is a **community-maintained** informal knowledge base.
+>
+> * It **does not reflect** Google’s product roadmap. (Please don't ask when a
+>   feature will ship)
+> * Refer to the [**Cloud Run documentation**][docs] for the most up-to-date
+>   information.
+>
+> **Googlers:** If you find this repo useful, you should recognize the work
+> internally, as I actively fight for alternative forms of content like this.
 
 - **Is this repo useful?** Please **⭑Star** this repository and share the love.
 - **Curious about something?** Open an [issue], someone may be able to add it to
