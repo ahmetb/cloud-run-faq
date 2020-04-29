@@ -98,7 +98,7 @@
   * [Are WebSockets supported on Cloud Run?](#are-websockets-supported-on-cloud-run)
 - [Microservices](#microservices)
   * [How do two Cloud Run services connect each other privately?](#how-do-two-cloud-run-services-connect-each-other-privately)
-- [Does Cloud Run have DNS service discovery?](#does-cloud-run-have-dns-service-discovery)
+  * [Does Cloud Run have DNS service discovery?](#does-cloud-run-have-dns-service-discovery)
 - [Autoscaling](#autoscaling)
   * [Does my Cloud Run service scale to zero?](#does-my-cloud-run-service-scale-to-zero)
   * [How can I limit the total number of instances for my application?](#how-can-i-limit-the-total-number-of-instances-for-my-application)
@@ -759,7 +759,7 @@ identity token, and add it to the Authorization header of the outbound request
 of the target service. You can find [documentation and examples
 here](https://cloud.google.com/run/docs/authenticating/service-to-service)
 
-## Does Cloud Run have DNS service discovery?
+### Does Cloud Run have DNS service discovery?
 
 If you're using Kubernetes or similar systems, you might be used to calling
 another service directly by name (e.g. `http://hello/`). However, Cloud Run does
