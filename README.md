@@ -72,6 +72,11 @@
   * [Do I get "warmup requests" like in App Engine?](#do-i-get-warmup-requests-like-in-app-engine)
   * [How to keep a Cloud Run service “warm”?](#how-to-keep-a-cloud-run-service-warm)
   * [How can I tell if a request was a “cold start”?](#how-can-i-tell-if-a-request-was-a-cold-start)
+- [Container Lifecycle](#container-lifecycle)
+  * [How does Cloud Run tell if my container is ready?](#how-does-cloud-run-tell-if-my-container-is-ready)
+  * [Does Cloud Run have readiness or liveness checks/probes?](#does-cloud-run-have-readiness-or-liveness-checksprobes)
+  * [What happens if my container exits/crashes?](#what-happens-if-my-container-exitscrashes)
+  * [What is the termination signal for Cloud Run services?](#what-is-the-termination-signal-for-cloud-run-services)
 - [Serving Traffic](#serving-traffic)
   * [Which network protocols are supported on Cloud Run?](#which-network-protocols-are-supported-on-cloud-run)
   * [What's the maximum request execution time limit?](#whats-the-maximum-request-execution-time-limit)
@@ -102,8 +107,6 @@
   * [Can I use the local filesystem?](#can-i-use-the-local-filesystem)
   * [Which system calls are supported?](#which-system-calls-are-supported)
   * [Which executable ABIs are supported?](#which-executable-abis-are-supported)
-  * [What happens if my container exits/crashes?](#what-happens-if-my-container-exitscrashes)
-  * [What is the termination signal for Cloud Run services?](#what-is-the-termination-signal-for-cloud-run-services)
   * [Where can I find the "instance ID" of my container?](#where-can-i-find-the-instance-id-of-my-container)
   * [How can I find the number of instances running?](#how-can-i-find-the-number-of-instances-running)
   * [How can my service can tell it is running on Cloud Run?](#how-can-my-service-can-tell-it-is-running-on-cloud-run)
@@ -488,9 +491,6 @@ Cloud Run does not provide any guarantees on how long it will keep a service
 "warm". It depends on factors like capacity and Google’s implementation
 details.
 
-Some users see their services staying warm up to an hour, or longer.
-<sup>[more user data needed!]</sup>
-
 ### How do I minimize the cold start latencies?
 
 See [performance optimization
@@ -541,6 +541,34 @@ view them in Stackdriver Logging, you can see the structured log label
 indicating "cold" request):~~
 
 ![Cold Start Log](img/cold-start-log.png)
+
+## Container Lifecycle
+
+### How does Cloud Run tell if my container is ready?
+
+Cloud Run starts sending traffic to your application once you start listening
+on the port number (given to you via `PORT` environment variable).
+
+### Does Cloud Run have readiness or liveness checks/probes?
+
+Cloud Run does not offer user-configurable liveness checks or probes like
+Kubernetes, as explained in previous question, the moment your server starts
+listening on the port number, you indicate that your application is ready to
+receive traffic.
+
+### What happens if my container exits/crashes?
+
+If the entrypoint process of a container exits, the container is stopped. A
+crashed container triggers [cold start](#cold-starts) while the container is
+restarted. Avoid exiting/crashing your server process by handling exceptions.
+See [development tips](https://cloud.google.com/run/docs/tips#reporting_errors).
+
+### What is the termination signal for Cloud Run services?
+
+Currently, Cloud Run terminates containers while [scaling to
+zero](#does-my-cloud-run-service-scale-to-zero) with unix signal 9 (`SIGKILL`).
+`SIGKILL` is not trappable (capturable) by applications. Therefore, your
+applications should be okay to be killed abruptly.
 
 ## Serving Traffic
 
@@ -783,19 +811,6 @@ executables compiled to [x84-64](https://en.wikipedia.org/wiki/X86-64). See
 [container-contract]: https://cloud.google.com/run/docs/reference/container-contract
 [cpu]: https://cloud.google.com/run/docs/reference/container-contract#cpu
 
-### What happens if my container exits/crashes?
-
-If the entrypoint process of a container exits, the container is stopped. A
-crashed container triggers [cold start](#cold-starts) while the container is
-restarted. Avoid exiting/crashing your server process by handling exceptions.
-See [development tips](https://cloud.google.com/run/docs/tips#reporting_errors).
-
-### What is the termination signal for Cloud Run services?
-
-Currently, Cloud Run terminates containers while [scaling to
-zero](#does-my-cloud-run-service-scale-to-zero) with unix signal 9 (`SIGKILL`).
-`SIGKILL` is not trappable (capturable) by applications. Therefore, your
-applications should be okay to be killed abruptly.
 
 ### Where can I find the "instance ID" of my container?
 
