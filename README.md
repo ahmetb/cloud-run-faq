@@ -82,6 +82,7 @@
   * [What's the maximum request execution time limit?](#whats-the-maximum-request-execution-time-limit)
   * [Does my service get a domain name on Cloud Run?](#does-my-service-get-a-domain-name-on-cloud-run)
   * [Are all Cloud Run services publicly accessible?](#are-all-cloud-run-services-publicly-accessible)
+  * [Can I run Cloud Run applications on a private IP?](#can-i-run-cloud-run-applications-on-a-private-ip)
   * [How much additional latency does running on Cloud Run add?](#how-much-additional-latency-does-running-on-cloud-run-add)
   * [Does my application get multiple requests concurrently?](#does-my-application-get-multiple-requests-concurrently)
   * [What if my application can’t handle concurrent requests?](#what-if-my-application-cant-handle-concurrent-requests)
@@ -112,6 +113,10 @@
   * [How can I find the number of instances running?](#how-can-i-find-the-number-of-instances-running)
   * [How can my service can tell it is running on Cloud Run?](#how-can-my-service-can-tell-it-is-running-on-cloud-run)
   * [Is there a way to get static IP for outbound requests?](#is-there-a-way-to-get-static-ip-for-outbound-requests)
+- [VPC Support](#vpc-support)
+  * [Can I place my Cloud Run application inside a VPC network?](#can-i-place-my-cloud-run-application-inside-a-vpc-network)
+  * [How to connect IPs in a VPC network from Cloud Run?](#how-to-connect-ips-in-a-vpc-network-from-cloud-run)
+  * [Are VPC Service Controls supported for Cloud Run?](#are-vpc-service-controls-supported-for-cloud-run)
 - [Monitoring and Logging](#monitoring-and-logging)
   * [Where do I write my application logs?](#where-do-i-write-my-application-logs)
   * [How can I have structured logs?](#how-can-i-have-structured-logs)
@@ -600,6 +605,17 @@ the Internet, or **private services** that require [authentication].
 
 [authentication]: https://cloud.google.com/run/docs/securing/authenticating
 
+### Can I run Cloud Run applications on a private IP?
+
+Currently no. Cloud Run applications always have a `*.run.app` public hostname
+and they cannot be placed inside a VPC (Virtual Private Cloud) network.
+
+If any other private service (e.g. GCE VMs, GKE) needs to call your Cloud Run
+application, they need to use this public hostname. However, despite you’re
+making requests to public IP from a GCE VM in the same region (or possibly on
+cross-region if you're on  GCP Premium network tier), the traffic won’t leave
+Google’s own network.
+
 ### How much additional latency does running on Cloud Run add?
 
 > TODO(ahmetb): Write this section. Ideally we should link to some blog posts
@@ -867,12 +883,51 @@ as well.
 
 ### Is there a way to get static IP for outbound requests?
 
-Since, currently Cloud NAT or Serverless VPC Connector are not supported on
-Cloud Run, your applications will not get a static IP for outbound connections.
+Currently not, since Cloud Run uses a dynamic serverless machine pool by Google
+and its IP addresses cannot be controlled by Cloud Run users.
 
 However, [there is a workaround](https://ahmet.im/blog/cloud-run-static-ip/)
 to route the traffic through a Google Compute Engine instance by running a
 persistent SSH tunnel inside the container and making your applications use it.
+
+
+## VPC Support
+
+### Can I place my Cloud Run application inside a VPC network?
+
+Currently no (see [here](#can-i-run-cloud-run-applications-on-a-private-ip));
+however, you can make requests to other resources inside the VPC network using
+the "VPC Access Connector" (see next question).
+
+### How to connect IPs in a VPC network from Cloud Run?
+
+Cloud Run now has beta support for "VPC Access Connector". This feature allows
+Cloud Run applications to be able to connect private IPs in the VPC (but not the
+other way).
+
+This way your Cloud Run applications can connect to private VPC IP addresses
+running:
+
+- GCE VMs
+- Cloud SQL instances
+- Cloud Memorystore instances
+- Kubernetes Pods/Services (on GKE public or private clusters)
+- Internal Load Balancers
+
+To learn more [read my blog post
+here](https://ahmet.im/blog/cloud-run-vpc-to-kubernetes/).
+
+> **TODO(ahmetb): Add link to official docs for this once they roll out.**
+
+### Are VPC Service Controls supported for Cloud Run?
+
+[VPC-SC](https://cloud.google.com/vpc-service-controls) allows you to define
+which endpoints your applications can connect to (to prevent exfiltration
+risks).
+
+However, Cloud Run applications currently cannot be placed inside a VPC network
+(see [above](#can-i-place-my-cloud-run-application-inside-a-vpc-network)),
+therefore this feature is currently not available.
 
 ## Monitoring and Logging
 
@@ -902,7 +957,8 @@ TODO(ahmetb): Write this section.
 
 ## Pricing
 
-> [Cloud Run Pricing documentation][pricing] has the most up-to-date information.
+> [Cloud Run Pricing documentation][pricing] has the most up-to-date
+> information.
 
 [pricing]: https://cloud.google.com/run/pricing
 
