@@ -61,7 +61,7 @@
   * [How do I continuously deploy to Cloud Run?](#how-do-i-continuously-deploy-to-cloud-run)
   * [Which container registries can I deploy from?](#which-container-registries-can-i-deploy-from)
   * [How can I deploy from other GCR registries?](#how-can-i-deploy-from-other-gcr-registries)
-  * [How can I serve traffic from multiple revisions?](#how-can-i-serve-traffic-from-multiple-revisions)
+  * [How to do canary or blue/green deployments on Cloud Run?](#how-to-do-canary-or-bluegreen-deployments-on-cloud-run)
   * [How can I specify Google credentials in Cloud Run applications?](#how-can-i-specify-google-credentials-in-cloud-run-applications)
   * [Can I use `kubectl` to deploy to Cloud Run?](#can-i-use-kubectl-to-deploy-to-cloud-run)
   * [Can I use Terraform to deploy to Cloud Run?](#can-i-use-terraform-to-deploy-to-cloud-run)
@@ -426,17 +426,16 @@ follow [this
 document](https://cloud.google.com/container-registry/docs/access-control#granting_users_and_other_projects_access_to_a_registry)
 to give this service account GCR access on the other project.
 
-### How can I serve traffic from multiple revisions?
+### How to do canary or blue/green deployments on Cloud Run?
 
 If you updated your Cloud Run service, you probably realized it creates a new
 [revision](https://cloud.google.com/run/docs/managing/revisions) for every new
 configuration of your service.
 
-However, Cloud Run (currently) only supports serving traffic from the last
-healthy revision of your service. Therefore, it currently does not support
-_revision based traffic splitting_ and _canary deployments_.
-
-This is subject to change soon. See also [issue 144717649](https://issuetracker.google.com/issues/144717649).
+Cloud Run allows you to [**split traffic** between multiple
+revisions](https://cloud.google.com/run/docs/rollouts-rollbacks-traffic-migration),
+so you can do gradual rollouts such as canary deployments or blue/green
+deployments.
 
 ### How can I specify Google credentials in Cloud Run applications?
 
