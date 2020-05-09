@@ -673,17 +673,22 @@ for Cloud Run applications (e.g. CDN, IAP, Cloud Armor, URL Maps...).
 
 ### How can I configure CDN for Cloud Run services?
 
-Since you can’t use [Cloud HTTP(S) Load Balancer][https-lb] with Cloud Run,
-you cannot use [Cloud CDN](https://cloud.google.com/cdn/).
+Since you **currently** can’t use [Cloud HTTP(S) Load Balancer][https-lb] with
+Cloud Run, you cannot use [Cloud CDN](https://cloud.google.com/cdn/). However,
+this is subject to change soon.
 
-However, you can have CDN from [Firebase
-Hosting](https://firebase.google.com/docs/hosting/) by:
+However, you can have CDN from other services:
 
-- responding to requests with a [`Cache-Control`
-  header](https://firebase.google.com/docs/hosting/manage-cache#set_cache-control), and
-- configuring a [rewrite configuration in
-  `firebase.json`](https://firebase.google.com/docs/hosting/cloud-run#direct_requests_to_container)
-  of your Firebase app.
+- [Firebase Hosting](https://firebase.google.com/docs/hosting/) by:
+  - responding to requests with a [`Cache-Control`
+    header](https://firebase.google.com/docs/hosting/manage-cache#set_cache-control),
+    and
+  - configuring a [rewrite configuration in
+    `firebase.json`](https://firebase.google.com/docs/hosting/cloud-run#direct_requests_to_container)
+    of your Firebase app.
+
+- [Cloudflare](https://cloudflare.com/) (not Google) using a custom domain
+  mapping.
 
 ### Does Cloud Run offer SSL/TLS certificates (HTTPS)?
 
