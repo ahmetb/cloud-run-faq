@@ -488,8 +488,7 @@ request.
 
 Cold start latency depends on [many
 factors](https://cloud.google.com/run/docs/tips#optimizing_performance), however
-many users observe additional **~2 seconds** latency on cold starts.
-<sup>[more user data needed!]</sup>
+it is independent of the image size.
 
 ### When will my service scale to zero?
 
