@@ -916,7 +916,7 @@ private IP address to be accessible from only within the VPC (see
 
 ### How to connect IPs in a VPC network from Cloud Run?
 
-Cloud Run **now has beta support** for "VPC Access Connector". This feature allows
+Cloud Run **now has beta support** for "Serverless VPC Access". This feature allows
 Cloud Run applications to be able to connect private IPs in the VPC (but not the
 other way).
 
