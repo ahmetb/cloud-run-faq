@@ -79,6 +79,7 @@
   * [What is the termination signal for Cloud Run services?](#what-is-the-termination-signal-for-cloud-run-services)
 - [Serving Traffic](#serving-traffic)
   * [Which network protocols are supported on Cloud Run?](#which-network-protocols-are-supported-on-cloud-run)
+  * [Customizing port number on Cloud Run?](#customizing-port-number-on-cloud-run)
   * [What's the maximum request execution time limit?](#whats-the-maximum-request-execution-time-limit)
   * [Does my service get a domain name on Cloud Run?](#does-my-service-get-a-domain-name-on-cloud-run)
   * [Are all Cloud Run services publicly accessible?](#are-all-cloud-run-services-publicly-accessible)
@@ -320,12 +321,11 @@ which has sample applications written in many languages.
 
 ### How do I make my web application compatible with Cloud Run?
 
-Your existing applications must listen on `PORT` environment variable to work
-on Cloud Run (see [container contract][container-contract]). (This value is
-currently only `8080`, but it may change in the future.)
-
-If your existing application doesn't allow you to configure port number it
-listens on, Cloud Run currently doesn't allow customizing the `PORT` value.
+Your existing applications must listen on the `PORT` environment variable to
+work on Cloud Run (see [container contract][container-contract]). This
+environment variable is given to your app by Cloud Run. It currently defaults to
+`8080` (but you should not rely on this) and you can [customize this port
+number](#customizing-port-number-on-cloud-run).
 
 ### Can Cloud Run receive events?
 
@@ -586,6 +586,14 @@ arbitrary TCP based application, or a Redis/Memcached server on Cloud Run.
 Also see: [HTTP/2](#is-http2-supported-on-cloud-run),
 [gRPC](#is-grpc-supported-on-cloud-run)
 
+### Customizing port number on Cloud Run?
+
+Cloud Run now allows you to [customize which port
+number](https://cloud.google.com/run/docs/configuring/containers#configure-port)
+your application serves traffic on. This is for applications that cannot
+change the server port by reading the `PORT` environment variable passed by
+Cloud Run. (Upon customizing, `PORT` value will have the specified value.)
+
 ### What's the maximum request execution time limit?
 
 Currently, a request times out after **15 minutes**. See [limits][lim].
@@ -713,7 +721,7 @@ beta service in August 2019.
 
 ### Is traffic between my app and Google’s load balancer encrypted?
 
-Since your app serves traffic on `PORT` (i.e. 8080) unencrypted, you might think
+Since your app serves traffic on `PORT` (by default 8080) unencrypted, you might think
 the connection between Google’s load balancer and your application is
 unencrypted.
 
