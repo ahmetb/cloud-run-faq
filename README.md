@@ -118,6 +118,7 @@
   * [Can I place my Cloud Run application inside a VPC network?](#can-i-place-my-cloud-run-application-inside-a-vpc-network)
   * [How to connect IPs in a VPC network from Cloud Run?](#how-to-connect-ips-in-a-vpc-network-from-cloud-run)
   * [Are VPC Service Controls supported for Cloud Run?](#are-vpc-service-controls-supported-for-cloud-run)
+  * [Are "Shared VPCs" supported by VPC Access connector?](#are-shared-vpcs-supported-by-vpc-access-connector)
 - [Monitoring and Logging](#monitoring-and-logging)
   * [Where do I write my application logs?](#where-do-i-write-my-application-logs)
   * [How can I have structured logs?](#how-can-i-have-structured-logs)
@@ -906,13 +907,16 @@ persistent SSH tunnel inside the container and making your applications use it.
 
 ### Can I place my Cloud Run application inside a VPC network?
 
-Currently no (see [here](#can-i-run-cloud-run-applications-on-a-private-ip));
-however, you can make requests to other resources inside the VPC network using
-the "VPC Access Connector" (see next question).
+Cloud Run **can connect to** private IPs in VPC networks ([see
+below](#how-to-connect-ips-in-a-vpc-network-from-cloud-run)).
+
+However, you currently cannot place a Cloud Run app into a VPC so it can have a
+private IP address to be accessible from only within the VPC (see
+[here](#can-i-run-cloud-run-applications-on-a-private-ip)).
 
 ### How to connect IPs in a VPC network from Cloud Run?
 
-Cloud Run now has beta support for "VPC Access Connector". This feature allows
+Cloud Run **now has beta support** for "VPC Access Connector". This feature allows
 Cloud Run applications to be able to connect private IPs in the VPC (but not the
 other way).
 
@@ -926,9 +930,9 @@ running:
 - Internal Load Balancers
 
 To learn more [read my blog post
-here](https://ahmet.im/blog/cloud-run-vpc-to-kubernetes/).
-
-> **TODO(ahmetb): Add link to official docs for this once they roll out.**
+here](https://ahmet.im/blog/cloud-run-vpc-to-kubernetes/) or [refer to the
+official
+documentation](https://cloud.google.com/vpc/docs/configure-serverless-vpc-access).
 
 ### Are VPC Service Controls supported for Cloud Run?
 
@@ -939,6 +943,11 @@ risks).
 However, Cloud Run applications currently cannot be placed inside a VPC network
 (see [above](#can-i-place-my-cloud-run-application-inside-a-vpc-network)),
 therefore this feature is currently not available.
+
+### Are "Shared VPCs" supported by VPC Access connector?
+
+[Currently
+not](https://cloud.google.com/vpc/docs/configure-serverless-vpc-access).
 
 ## Monitoring and Logging
 
