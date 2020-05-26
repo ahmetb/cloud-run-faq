@@ -695,9 +695,6 @@ However, you can have CDN from other services:
     `firebase.json`](https://firebase.google.com/docs/hosting/cloud-run#direct_requests_to_container)
     of your Firebase app.
 
-- [Cloudflare](https://cloudflare.com/) (not Google) using a custom domain
-  mapping.
-
 ### Does Cloud Run offer SSL/TLS certificates (HTTPS)?
 
 Yes. If you’re using the domain name provided by Cloud Run (`*.run.app`), your
