@@ -916,9 +916,9 @@ private IP address to be accessible from only within the VPC (see
 
 ### How to connect IPs in a VPC network from Cloud Run?
 
-Cloud Run **now has beta support** for "Serverless VPC Access". This feature allows
-Cloud Run applications to be able to connect private IPs in the VPC (but not the
-other way).
+Cloud Run **now has [beta support][vpc-doc]** for "Serverless VPC Access". This
+feature allows Cloud Run applications to be able to connect private IPs in the
+VPC (but not the other way).
 
 This way your Cloud Run applications can connect to private VPC IP addresses
 running:
@@ -932,7 +932,9 @@ running:
 To learn more [read my blog post
 here](https://ahmet.im/blog/cloud-run-vpc-to-kubernetes/) or [refer to the
 official
-documentation](https://cloud.google.com/vpc/docs/configure-serverless-vpc-access).
+documentation][vpc-doc].
+
+[vpc-doc]: https://cloud.google.com/run/docs/configuring/connecting-vpc
 
 ### Are VPC Service Controls supported for Cloud Run?
 
