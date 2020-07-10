@@ -89,12 +89,15 @@
   * [What if my application can’t handle concurrent requests?](#what-if-my-application-cant-handle-concurrent-requests)
   * [How do I find the right concurrency level for my application?](#how-do-i-find-the-right-concurrency-level-for-my-application)
   * [Can I make request to a specific container instance?](#can-i-make-request-to-a-specific-container-instance)
-  * [Can serve Cloud Run services with Cloud HTTP(S) Load Balancer?](#can-serve-cloud-run-services-with-cloud-https-load-balancer)
+  * [Can I add Cloud Run services as backends to Cloud HTTP(S) Load Balancer?](#can-i-add-cloud-run-services-as-backends-to-cloud-https-load-balancer)
+  * [How does Cloud Run’s load balancing compare with Cloud Load Balancer (GCLB)](#how-does-cloud-runs-load-balancing-compare-with-cloud-load-balancer-gclb)
   * [How can I configure CDN for Cloud Run services?](#how-can-i-configure-cdn-for-cloud-run-services)
   * [Does Cloud Run offer SSL/TLS certificates (HTTPS)?](#does-cloud-run-offer-ssltls-certificates-https)
+  * [How can I use my own TLS certificates for Cloud Run?](#how-can-i-use-my-own-tls-certificates-for-cloud-run)
   * [How can I redirect all HTTP traffic to HTTPS?](#how-can-i-redirect-all-http-traffic-to-https)
-  * [Is traffic between my app and Google’s load balancer encrypted?](#is-traffic-between-my-app-and-googles-load-balancer-encrypted)
+  * [Is traffic between my app and Cloud Run’s load balancer encrypted?](#is-traffic-between-my-app-and-cloud-runs-load-balancer-encrypted)
   * [Is HTTP/2 supported on Cloud Run?](#is-http2-supported-on-cloud-run)
+  * [Does Cloud Run support load balancing among multiple regions?](#does-cloud-run-support-load-balancing-among-multiple-regions)
   * [Can my application server run on HTTP/2 protocol?](#can-my-application-server-run-on-http2-protocol)
   * [Is gRPC supported on Cloud Run?](#is-grpc-supported-on-cloud-run)
   * [Are WebSockets supported on Cloud Run?](#are-websockets-supported-on-cloud-run)
@@ -669,23 +672,38 @@ for more.
 No, Cloud Run does not offer a "sticky session" primitive. All requests are
 load balanced between available container instances.
 
-### Can serve Cloud Run services with Cloud HTTP(S) Load Balancer?
+### Can I add Cloud Run services as backends to Cloud HTTP(S) Load Balancer?
 
-Currently, you can’t route traffic to Cloud Run services via the [Cloud HTTP(S)
-Load Balancer][https-lb] (a.k.a. GCLB) yet.
+**UPDATE (July 10, 2020):** Yes, [this is now in **beta**][neg].
 
-Therefore many features only available on Load Balancers are not yet available
-for Cloud Run applications (e.g. CDN, IAP, Cloud Armor, URL Maps...).
+You need to [add serverless network endpoint groups][neg-setup] behind a [Cloud
+HTTP(S) Load Balancer (GCLB)][https-lb] to achieve this. The "serverless NEG" concepts
+allows Cloud Run services to be added behind a load balancer, just like a VM
+or GCS bucket.
 
 [https-lb]: https://cloud.google.com/load-balancing/docs/https/
+[neg]: https://cloud.google.com/load-balancing/docs/negs/serverless-neg-concepts
+[neg-setup]: https://cloud.google.com/load-balancing/docs/negs/setting-up-serverless-negs
+
+### How does Cloud Run’s load balancing compare with Cloud Load Balancer (GCLB)
+
+Cloud Run applications [can be added][neg-setup] behind a [Cloud HTTP(s) load
+balancer (GCLB)][https-lb]. However you might wonder, aren't Cloud Run endpoints
+already _load-balanced_? Yes, they are.
+
+However, GCLB offers a wide variety of options that you might need, such as:
+
+- Support for configuring GCLB products like Cloud CDN and Cloud Armor (Cloud IAP is not yet supported)
+- Routing to multiple backends (VM, GCS bucket, Run/GCF apps) on a single domain
+- Bringing your own certificates
+- Having a static IP (IPv4 or IPv6) for your domains
 
 ### How can I configure CDN for Cloud Run services?
 
-Since you **currently** can’t use [Cloud HTTP(S) Load Balancer][https-lb] with
-Cloud Run, you cannot use [Cloud CDN](https://cloud.google.com/cdn/). However,
-this is subject to change soon.
+Yes, see previous question. With  [Cloud HTTP(S) Load Balancer (GCLB)][https-lb] integration,
+you need to add the Cloud Run service as a NEG to the load balancer.
 
-However, you can have CDN from other services:
+You can also have CDN from other services if you don't want to use Cloud HTTP(S) Load Balancer:
 
 - [Firebase Hosting](https://firebase.google.com/docs/hosting/) by:
   - responding to requests with a [`Cache-Control`
@@ -717,6 +735,12 @@ Encrypt](https://letsencrypt.org/) to get a certificate for your domains.
 
 [custom domain]: https://cloud.google.com/run/docs/mapping-custom-domains
 
+### How can I use my own TLS certificates for Cloud Run?
+
+When you use custom domain mapping feature of Cloud Run, it will provision a TLS
+certificate for your domain. However, if you want to use custom features, check
+out the [Cloud HTTP(S) Load Balancer (GCLB) integration][setup-neg].
+
 ### How can I redirect all HTTP traffic to HTTPS?
 
 This is built in and required. To make Cloud Run secure by default, Cloud Run
@@ -726,11 +750,11 @@ Any HTTP requests are automatically returned an HTTP 302 response pointing to
 the HTTPS version of the current URL. This was rolled out as a change in the
 beta service in August 2019.
 
-### Is traffic between my app and Google’s load balancer encrypted?
+### Is traffic between my app and Cloud Run’s load balancer encrypted?
 
-Since your app serves traffic on `PORT` (by default 8080) unencrypted, you might think
-the connection between Google’s load balancer and your application is
-unencrypted.
+Since your app serves traffic on `PORT` (by default 8080) unencrypted, you might
+think the connection between Cloud Run’s load-balanced endpoint and your
+application is unencrypted.
 
 However, the transit between Google’s frontend/load balancer and your Cloud Run
 container instance is encrypted. Google terminates TLS/HTTPS connections before
@@ -748,6 +772,16 @@ $ curl --http2 https://<url>
 < HTTP/2 200
 ...
 ```
+
+### Does Cloud Run support load balancing among multiple regions?
+
+Not natively. Cloud Run services are regional. But it's possible to do it
+yourself.
+
+Using the [Cloud Load Balancer (GCLB)][setup-neg] integration, deploying your
+service to multiple regions and adding them behind the load balancer, the
+clients connecting to the load balancer IP/domain will be routed to the Cloud
+Run service **closest** Cloud Run service to the client.
 
 ### Can my application server run on HTTP/2 protocol?
 
