@@ -115,7 +115,7 @@
   * [Which executable ABIs are supported?](#which-executable-abis-are-supported)
   * [Where can I find the "instance ID" of my container?](#where-can-i-find-the-instance-id-of-my-container)
   * [How can I find the number of instances running?](#how-can-i-find-the-number-of-instances-running)
-  * [How can my service can tell it is running on Cloud Run?](#how-can-my-service-can-tell-it-is-running-on-cloud-run)
+  * [How can my service tell it is running on Cloud Run?](#how-can-my-service-tell-it-is-running-on-cloud-run)
   * [Is there a way to get static IP for outbound requests?](#is-there-a-way-to-get-static-ip-for-outbound-requests)
 - [VPC Support](#vpc-support)
   * [Can I place my Cloud Run application inside a VPC network?](#can-i-place-my-cloud-run-application-inside-a-vpc-network)
