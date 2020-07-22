@@ -391,7 +391,8 @@ However, Cloud Run **for Anthos** allows you to mount Kubernetes [Secrets] and
 
 ### How do I continuously deploy to Cloud Run?
 
-- Tutorial: [Continuous Deployment using Google Cloud Build](https://cloud.google.com/run/docs/continuous-deployment)
+- A lot of CI/CD tutorials at [awesome-cloudrun repo](https://github.com/steren/awesome-cloudrun#cicd)
+- Documentation: [Continuous Deployment using Google Cloud Build](https://cloud.google.com/cloud-build/docs/deploying-builds/deploy-cloud-run)
 - Blog: [Deploy using GitLab CI/CD](https://viggy28.dev/article/cloudrun-cicd/)
 
 _(If you know of articles about other CI/CD system integrations, add them here.)_
