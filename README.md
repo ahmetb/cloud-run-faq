@@ -407,7 +407,7 @@ For other CI/CD systems, roughly the steps you should follow look like:
 
 1. Deploy the app by calling:
 
-       gcloud beta run deploy [MY_SERVICE] --image=[...] [...]
+       gcloud run deploy [MY_SERVICE] --image=[...] [...]
 
 [gcb]: https://cloud.google.com/cloud-build/
 
@@ -463,7 +463,7 @@ As a solution, you can write your [Knative `Service`][ksvc] resource as a .yaml
 file and use the following command to deploy to Cloud Run:
 
 ```sh
-gcloud beta run services replace --platform=managed <file.yaml>
+gcloud run services replace --platform=managed <file.yaml>
 ```
 
 Since "Cloud Run for Anthos" runs [Knative][knative] natively, you can use
