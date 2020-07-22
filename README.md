@@ -399,7 +399,10 @@ _(If you know of articles about other CI/CD system integrations, add them here.)
 For other CI/CD systems, roughly the steps you should follow look like:
 
 1. Create a new service account with a JSON key.
-1. Give the service account IAM permissions to deploy to Cloud Run.
+1. Give the service account [IAM permissions to deploy to Cloud Run](https://cloud.google.com/run/docs/reference/iam/roles).
+      * `roles/run.admin` to deploy applications
+      * `roles/iam.serviceAccountUser` on the service account that your app will use
+      
 1. Upload the JSON key to the CI/CD environment, and authenticate to `gcloud`
    by calling:
 
