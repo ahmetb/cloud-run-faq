@@ -920,7 +920,7 @@ serverless world, since your applications autoscale based on traffic patterns
 better and you only pay while a request is being handled (not the idle instance
 time).
 
-### How can my service can tell it is running on Cloud Run?
+### How can my service tell it is running on Cloud Run?
 
 Cloud Run provides some [environment variables][container-contract] standard in
 [Knative][knative]. Ideally you should explicitly deploy your app with an
