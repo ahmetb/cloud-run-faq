@@ -717,15 +717,8 @@ You can also have CDN from other services if you don't want to use Cloud HTTP(S)
     `firebase.json`](https://firebase.google.com/docs/hosting/cloud-run#direct_requests_to_container)
     of your Firebase app.
 
-> **WARNING:** [Cloudflare](https://cloudflare.com/) Proxy currently does not
-> work with Cloud Run services. Putting a Cloud Run service behind the Cloudflare
-> proxy _may seem like it is temporarily working_, however about 88 days later,
-> the TLS certificate renewal will fail for these services.
->
-> That said, you can still use Cloudflare’s DNS capabilities by disabling the
-> proxying using the [orange cloud icon
-> toggle](https://support.cloudflare.com/hc/en-us/articles/360019093151-Managing-DNS-records-in-Cloudflare)
-> and make the service go from "Proxied" to "DNS only".
+> **WARNING:** If you are using [Cloudflare](https://cloudflare.com/) with proxying
+> capabilities, [follow the guide here](https://cloud.google.com/run/docs/mapping-custom-domains).
 
 ### Does Cloud Run offer SSL/TLS certificates (HTTPS)?
 
