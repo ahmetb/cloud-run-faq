@@ -578,9 +578,10 @@ See [development tips](https://cloud.google.com/run/docs/tips#reporting_errors).
 ### What is the termination signal for Cloud Run services?
 
 Currently, Cloud Run terminates containers while [scaling to
-zero](#does-my-cloud-run-service-scale-to-zero) with unix signal 9 (`SIGKILL`).
-`SIGKILL` is not trappable (capturable) by applications. Therefore, your
-applications should be okay to be killed abruptly.
+zero](#does-my-cloud-run-service-scale-to-zero) with unix signal 15 (`SIGTERM`).
+`SIGTERM` is trappable (capturable) by applications. If handled, CPU is allocated 
+for 10s max.
+
 
 ## Serving Traffic
 
