@@ -934,13 +934,10 @@ as well.
 
 ### Is there a way to get static IP for outbound requests?
 
-Currently not, since Cloud Run uses a dynamic serverless machine pool by Google
-and its IP addresses cannot be controlled by Cloud Run users.
-
-However, [there is a workaround](https://ahmet.im/blog/cloud-run-static-ip/)
-to route the traffic through a Google Compute Engine instance by running a
-persistent SSH tunnel inside the container and making your applications use it.
-
+Yes, this involves configuring a Cloud Router and Cloud NAT
+for a VPC network and using VPC connector with your Cloud Run service.
+Read [documentation](https://cloud.google.com/run/docs/configuring/connecting-vpc#egress)
+and [follow setup guide](https://cloud.google.com/run/docs/configuring/static-outbound-ip).
 
 ## VPC Support
 
