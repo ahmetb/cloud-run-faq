@@ -1,26 +1,18 @@
-# [Google Cloud Run][run] - FAQ
+# [Google Cloud Run][run] - Preguntas frecuentes
 
-### [Google Cloud Run en Español](./README-SPANISH.md)
-
-> ⚠️ Beware: This is a **community-maintained** informal knowledge base.
+> ⚠️ Cuidado: Esta es una base de conocimiento informal **mantenida por la comunidad**.
 >
-> - It **does not reflect** Google’s product roadmap. (Please don't ask when a
->   feature will ship)
-> - Refer to the [**Cloud Run documentation**][docs] for the most up-to-date
->   information.
+> - Esto **no refleja ** una ruta de los productos de Google. (Por favor, no preguntes cuando se subiran nuevas características)
+> - Ingresa a la [** Documentación oficial de Cloud Run**][docs] para las ultimas actualizaciones.
 >
-> **Googlers:** If you find this repo useful, you should recognize the work
-> internally, as I actively fight for alternative forms of content like this.
+> **Googlers:** Si encuentras útil este repositorio, se debe de reconocer el trabajo interno, ya que lucho activamente por formas alternativas de contenido como esta.
 
-- **Is this repo useful?** Please **⭑Star** this repository and share the love.
-- **Curious about something?** Open an [issue], someone may be able to add it to
-  the FAQ.
-- **Contribute** if you learned something interesting about Cloud Run.
-- **Trouble using Cloud Run?** Ask a question [on Stack Overflow][so].
-- **Check out** [awesome-cloudrun][awesome] for a curated list of Cloud Run
-  articles, tools and examples.
-- **Follow me** [on Twitter][twitter] as I frequently share Cloud Run news
-  and tips.
+- **¿Te es útil este repositorio?** Por favor dale **⭑Star** y compartelo con cariño.
+- **¿Tienes curiosidad sobre el tema?** Abre un [issue], tal vez alguien pueda agregarlo a la documentación.
+- **Contribuye** si aprendiste algo interesante sobre Cloud Run.
+- **¿Problemas usando Cloud Run?** Haz una pregunta [en Stack Overflow][so].
+- **Revisa** [awesome-cloudrun][awesome] donde encontraras un listado de artículos, herramientas y ejemplos sobre Cloud Run
+- **Sígueme** [en Twitter][twitter] con frecuencia comparto noticias y tips sobre Cloud Run
 
 [issue]: https://github.com/ahmetb/cloud-run-faq/issues
 [run]: https://cloud.google.com/run/
@@ -40,14 +32,14 @@
 
 <!-- toc -->
 
-- [Basics](#basics)
-  - [What is Cloud Run?](#what-is-cloud-run)
-  - [How is it different than App Engine Flexible?](#how-is-it-different-than-app-engine-flexible)
-  - [How is it different than Google Cloud Functions?](#how-is-it-different-than-google-cloud-functions)
-  - [How does it compare to AWS Fargate?](#how-does-it-compare-to-aws-fargate)
-  - [How does it compare to Azure Container Instances?](#how-does-it-compare-to-azure-container-instances)
-  - [What is "Cloud Run for Anthos"?](#what-is-cloud-run-for-anthos)
-  - [Is Cloud Run a "hosted Knative"?](#is-cloud-run-a-hosted-knative)
+- [Básicos](#basics)
+  - [¿Qué es Cloud Run?](#que-es-cloud-run)
+  - [¿Cuál es la diferencia con Google App Engine (GAE) Flexible?](#cual-es-la-diferencia-con-app-engine-flexible)
+  - [¿Cómo se diferencia de Google Cloud Functions (GCF)?](#como-se-diferencia-de-google-cloud-functions)
+  - [¿Cómo se compara con AWS Fargate?](#como-se-compara-con-aws-fargate)
+  - [¿Cómo se compara con Azure Container Instances?](#como-se-compara-con-azure-container-instances)
+  - [¿Qué es "Cloud Run for Anthos"?](#que-es-cloud-run-for-anthos)
+  - [Es Cloud Run un "hosted Knative"?](#es-cloud-run-un-hosted-knative)
 - [Developing Applications](#developing-applications)
   - [Which applications are suitable for Cloud Run?](#which-applications-are-suitable-for-cloud-run)
   - [What if my application is doing background work outside of request processing?](#what-if-my-application-is-doing-background-work-outside-of-request-processing)
@@ -139,55 +131,39 @@
 
 ---
 
-## Basics
+## <p id="basics">Básicos</p>
 
-### What is Cloud Run?
+### <p id="que-es-cloud-run">¿Qué es Cloud Run?</p>
 
-[Cloud Run][run] is a service by Google Cloud Platform to run your stateless
-HTTP containers without worrying about provisioning machines, clusters or
-autoscaling.
+[Cloud Run][run] es un servicio de Google Cloud Platform que corre tus contenedores HTTP sin estado, sin que te preocupes sobre el aprovisionamiento de máquinas, clústeres o auto escalamiento.
 
-With Cloud Run, you go from a "container image" to a fully managed web
-application running on a domain name with TLS certificate that auto-scales with
-requests in a single command. You only [pay](#pricing) while a request is
-handled.
+Con Cloud Run, puedes ir de "una imagen de contenedor" a una aplicación web totalmente gestionadas corriendo en un dominio con un certificado TLS que auto escala con peticiones en un solo comando. Solo [pay](#pricing) mientras se esté procesando una solicitud.
 
-### How is it different than App Engine Flexible?
+### <p id="cual-es-la-diferencia-con-app-engine-flexible">¿Cúal es la diferencia con Google App Engine (GAE) Flexible </p>
 
-[GAE Flexible](https://cloud.google.com/appengine/docs/flexible/) and [Cloud
-Run][run] are very similar. They both accept container images as deployment input,
-they both auto-scale, and manage the infrastructure your code runs
-on for you. However:
+[GAE Flexible](https://cloud.google.com/appengine/docs/flexible/) y [Cloud Run][run] son muy similares. Ambos aceptan imágenes de contenedores como entrada para el despliegue, ambos tienen auto escalamiento, y administra por ti la infraestructura donde tu código corre. Sin embargo:
 
-- GAE Flexible is built on VMs, therefore is slower to deploy and scale.
-- GAE Flexible does not scale to zero, at least 1 instance must be running.
-- GAE Flexible billing has 1 minute granularity, Cloud Run in 0.1 second.
-- GAE Flexible supports
-  [Websockets](https://cloud.google.com/blog/products/application-development/introducing-websockets-support-for-app-engine-flexible-environment)
-  in beta, unlike Cloud Run.
+- GAE Flexible es contruido en máquinas virtuales (Virtual Machines), por lo tanto es lento al desplegar y escalar.
+- GAE Flexible no tiene escala cero (totalmente apagado), por lo menos una instancia debe de estar corriendo.
+- GAE Flexible el cobro es por minuto, Cloud Run es por 0.1 segundos.
+- GAE Flexible soporta [Websockets](https://cloud.google.com/blog/products/application-development/introducing-websockets-support-for-app-engine-flexible-environment) en beta, Cloud Run no.
 
-Read more about [choosing a container option on
-GCP](https://cloud.google.com/container-options/).
+Lee mas sobre [seleccionar una opción de contenedor en GCP](https://cloud.google.com/container-options/).
 
-### How is it different than Google Cloud Functions?
+### <p id="como-se-diferencia-de-google-cloud-functions">¿Cómo se diferencia de Google Cloud Functions (GCF)?</p>
 
-[GCF](https://cloud.google.com/functions) lets you deploy snippets of code
-(functions) written in a limited set of programming languages, to natively
-handle HTTP requests or events from many GCP sources.
+[GCF](https://cloud.google.com/functions) permite implementar segmentos de código (functions) escritos en un conjunto limitiado de lenguajes de programación para manejar solicitudes HTTP de manera nativa o eventos de varias fuentes de GCP.
 
-Cloud Run lets you deploy using any programming language, since it accepts
-container images (more flexible, but also potentially more tedious to develop).
-It also allows using any tool or system library from your application (see
-[here](#can-i-run-my-own-system-libraries-and-tools)) and GCF doesn’t let you
-use such custom system executables.
+Cloud Run te permite desplegar cualquier lenguaje de programación, por que acepta imagenes de contenedores (es mas flexible, pero mas tedioso de desarrollar).
 
-Cloud Run can only receive HTTP requests or [Pub/Sub push events](https://cloud.google.com/pubsub/docs/push).
-(See [this tutorial](https://cloud.google.com/run/docs/tutorials/pubsub)).
+También te permite usar cualquier herramiento o libreria del sistmea de su aplicación (mas información [aquí](#can-i-run-my-own-system-libraries-and-tools)) y GCF no permite que uses sistemas ejecutables personalizados.
 
-Both services auto-scale your code, manage the infrastructure your code runs on
-and they both run on GCP’s serverless infrastructure.
+Cloud Run solo puede recibir solicitudes HTTP o [Pub/Sub eventos push](https://cloud.google.com/pubsub/docs/push).
+(Mira [este tutorial](https://cloud.google.com/run/docs/tutorials/pubsub)).
 
-Read more about [choosing between GCP's serverless options](https://cloud.google.com/serverless-options/#header_3)
+Ambos servicios escalan automáticamente con el código, administran la infraestructura en la que corre el código y ambos corren en la infraestrucutra serverless de GCP (Google Cloud Platform)
+
+Lee mas al respecto [selecciona entre las opciones serverless de GCP's](https://cloud.google.com/serverless-options/#header_3)
 
 ### How does it compare to AWS Fargate?
 
