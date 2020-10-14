@@ -799,10 +799,10 @@ more](https://stackoverflow.com/questions/61231930/can-i-have-my-cloudrun-server
 
 ### Is gRPC supported on Cloud Run?
 
-Cloud Run supports [unary
-calls](https://grpc.io/docs/guides/concepts/#unary-rpc) on
-[gRPC](https://grpc.io). Streaming RPCs are not yet
-supported.
+Yes. Cloud Run (fully managed) can run [gRPC](https://grpc.io/) services with
+[server-streaming RPCs](https://grpc.io/docs/guides/concepts/#server-streaming-rpc)
+and send partial responses in a single request. Cloud Run also supports
+[unary (non-streaming) RPCs](https://grpc.io/docs/guides/concepts/#unary-rpc). 
 
 Since [Cloud Run for Anthos][crogke] runs on GCE networking stack, gRPC works
 natively on that platform.
