@@ -96,8 +96,8 @@
   * [How can I use my own TLS certificates for Cloud Run?](#how-can-i-use-my-own-tls-certificates-for-cloud-run)
   * [How can I redirect all HTTP traffic to HTTPS?](#how-can-i-redirect-all-http-traffic-to-https)
   * [Is traffic between my app and Cloud Run’s load balancer encrypted?](#is-traffic-between-my-app-and-cloud-runs-load-balancer-encrypted)
-  * [Is HTTP/2 supported on Cloud Run?](#is-http2-supported-on-cloud-run)
   * [Does Cloud Run support load balancing among multiple regions?](#does-cloud-run-support-load-balancing-among-multiple-regions)
+  * [Is HTTP/2 supported on Cloud Run?](#is-http2-supported-on-cloud-run)
   * [Can my application server run on HTTP/2 protocol?](#can-my-application-server-run-on-http2-protocol)
   * [Is gRPC supported on Cloud Run?](#is-grpc-supported-on-cloud-run)
   * [Are WebSockets supported on Cloud Run?](#are-websockets-supported-on-cloud-run)
@@ -784,7 +784,7 @@ $ curl --http2 https://<url>
 
 ### Can my application server run on HTTP/2 protocol?
 
-HTTP/2 to the container is supported for gRPC services. 
+HTTP/2 to the container is currently only supported for gRPC services. 
 
 Cloud Run requires your application to serve on an **unencrypted** endpoint
 and HTTP/2 by default requires TLS.
@@ -792,9 +792,9 @@ and HTTP/2 by default requires TLS.
 If your server supports HTTP/2 upgrade via the `h2c` (unencrypted HTTP/2) 
 protocol, it will safely fall-back to HTTP/1.1.
 
-If you develop an app that **only** speaks HTTP/2 (with H2C), Cloud Run will
-not currently route requests to it, as Cloud Run does include prior knowledge
-headers and only routes requests as HTTP/2 for gRPC.
+If you develop an HTTP/2 **only** server, Cloud Run will
+not currently be able to route requests to it, as Cloud Run does include prior knowledge
+headers by default.
 
 ### Is gRPC supported on Cloud Run?
 
