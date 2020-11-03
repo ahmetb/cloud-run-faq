@@ -187,11 +187,6 @@ and they both run on GCP’s serverless infrastructure.
 
 Read more about [choosing between GCP's serverless options](https://cloud.google.com/serverless-options/#header_3)
 
-Besides Pub/Sub, Google Cloud Eventarc, now in preview, allows you to trigger 
-Cloud Run from events that originate from Cloud Storage, BigQuery, Firestore
-and more than 60 other Google Cloud sources. 
-See [this blog post](https://cloud.google.com/blog/products/serverless/build-event-driven-applications-in-cloud-run) for detail.
-
 ### How does it compare to AWS Fargate?
 
 [AWS Fargate](https://aws.amazon.com/fargate/) and Cloud Run both let you run
