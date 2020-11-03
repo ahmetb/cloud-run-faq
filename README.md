@@ -352,6 +352,11 @@ Run service.
 Follow [this tutorial](https://cloud.google.com/run/docs/tutorials/pubsub) for
 instructions about how to push Pub/Sub events to Cloud Run services.
 
+Besides Pub/Sub, Google Cloud Eventarc(in preview) allows you to trigger 
+Cloud Run from events that originate from Cloud Storage, BigQuery, Firestore
+and more than 60 other Google Cloud sources. 
+See [this blog post](https://cloud.google.com/blog/products/serverless/build-event-driven-applications-in-cloud-run) for detail.
+
 ### How to configure secrets for Cloud Run applications?
 
 You can use [Secret Manager](https://cloud.google.com/secret-manager/docs/) with
