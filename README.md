@@ -813,6 +813,10 @@ natively on that platform.
 
 [crogke]: https://cloud.google.com/run/docs/gke/setup
 
+### How can I serve responses larger than 32MB with Cloud Run?
+
+Cloud Run can stream responses that are larger than 32MB using HTTP chunked encoding. Add the HTTP header `Transfer-Encoding: chunked` to your response if you know it will be larger than 32MB.
+
 ### Are WebSockets supported on Cloud Run?
 
 [WebSockets](https://en.wikipedia.org/wiki/WebSocket) are currently not
