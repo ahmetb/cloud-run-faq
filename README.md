@@ -100,6 +100,7 @@
   * [Is HTTP/2 supported on Cloud Run?](#is-http2-supported-on-cloud-run)
   * [Can my application server run on HTTP/2 protocol?](#can-my-application-server-run-on-http2-protocol)
   * [Is gRPC supported on Cloud Run?](#is-grpc-supported-on-cloud-run)
+  * [How can I serve responses larger than 32MB with Cloud Run?](#how-can-i-serve-responses-larger-than-32mb-with-cloud-run)
   * [Are WebSockets supported on Cloud Run?](#are-websockets-supported-on-cloud-run)
 - [Microservices](#microservices)
   * [How do two Cloud Run services connect each other privately?](#how-do-two-cloud-run-services-connect-each-other-privately)
@@ -812,6 +813,12 @@ Since [Cloud Run for Anthos][crogke] runs on GCE networking stack, gRPC works
 natively on that platform.
 
 [crogke]: https://cloud.google.com/run/docs/gke/setup
+
+### How can I serve responses larger than 32MB with Cloud Run?
+
+Cloud Run can stream responses that are larger than 32MB using HTTP chunked
+encoding. Add the HTTP header `Transfer-Encoding: chunked` to your response
+if you know it will be larger than 32MB.
 
 ### Are WebSockets supported on Cloud Run?
 
