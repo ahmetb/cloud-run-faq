@@ -43,6 +43,7 @@
   * [How is it different than App Engine Flexible?](#how-is-it-different-than-app-engine-flexible)
   * [How is it different than Google Cloud Functions?](#how-is-it-different-than-google-cloud-functions)
   * [How does it compare to AWS Fargate?](#how-does-it-compare-to-aws-fargate)
+  * [How does it compare to AWS Lambda Container Image support?](#how-does-it-compare-to-aws-lambda-container-image-support)
   * [How does it compare to Azure Container Instances?](#how-does-it-compare-to-azure-container-instances)
   * [What is "Cloud Run for Anthos"?](#what-is-cloud-run-for-anthos)
   * [Is Cloud Run a "hosted Knative"?](#is-cloud-run-a-hosted-knative)
@@ -54,8 +55,10 @@
   * [Where do I get started to deploy a HTTP web server container?](#where-do-i-get-started-to-deploy-a-http-web-server-container)
   * [How do I make my web application compatible with Cloud Run?](#how-do-i-make-my-web-application-compatible-with-cloud-run)
   * [Can Cloud Run receive events?](#can-cloud-run-receive-events)
-  * [How to configure secrets for Cloud Run applications?](#how-to-configure-secrets-for-cloud-run-applications)
+  * [Is Cloud Run good for running static websites?](#is-cloud-run-good-for-running-static-websites)
   * [How can I have cronjobs on Cloud Run?](#how-can-i-have-cronjobs-on-cloud-run)
+  * [Can I run a container only once on Cloud Run?](#can-i-run-a-container-only-once-on-cloud-run)
+  * [How to configure secrets for Cloud Run applications?](#how-to-configure-secrets-for-cloud-run-applications)
   * [Can I mount storage volumes or disks on Cloud Run?](#can-i-mount-storage-volumes-or-disks-on-cloud-run)
 - [Deploying](#deploying)
   * [How do I continuously deploy to Cloud Run?](#how-do-i-continuously-deploy-to-cloud-run)
@@ -215,6 +218,26 @@ The pricing model is also different:
   Fargate doesn't support scale-to-zero, a service receiving no traffic will
   still incur costs.
 
+### How does it compare to AWS Lambda Container Image support?
+
+AWS Lambda has recently added [support for running container
+images](https://aws.amazon.com/blogs/aws/new-for-aws-lambda-container-image-support/).
+
+These images still have to be either an AWS-provided runtime image (i.e. limited
+language support) such as `public.ecr.aws/lambda/nodejs:12` or you have to
+provide your own [Runtime
+API](https://docs.aws.amazon.com/lambda/latest/dg/runtimes-api.html)
+implementation to be able to run arbitrary container images.
+
+- Cloud Run can run any container images that runs an HTTP server
+- AWS Lambda cannot run arbitrary container images. You have to either use an
+  AWS-provided image, or code your own Runtime API translation layer.
+- AWS Lambda doesn't support multiple requests handled by the same instance,
+  and each request is billed separately.
+- a single Cloud Run container instance can handle multiple requests
+  simultaneously and you aren't charged for them separately. (see: [When am I
+  charged?](#when-am-i-charged))
+
 ### How does it compare to Azure Container Instances?
 
 [Azure Container
@@ -340,7 +363,7 @@ Cloud Run integrates securely with Pub/Sub push subscriptions:
 
 * Events are delivered via HTTP to the endpoint of your Cloud Run service.
 * Pub/Sub automatically validates the ownership of the `*.run.app` Cloud Run
-URLs 
+URLs
 * You can leverage [Pub/Sub push authentication](https://cloud.google.com/pubsub/docs/push?utm_campaign=CDR_ahm_aap-severless_cloud-run-faq_&utm_source=external&utm_medium=web#setting_up_for_push_authentication)
 to securely and privately push events to Cloud Run services, without exposing
 them publicly to the internet.
@@ -353,10 +376,37 @@ Run service.
 Follow [this tutorial](https://cloud.google.com/run/docs/tutorials/pubsub?utm_campaign=CDR_ahm_aap-severless_cloud-run-faq_&utm_source=external&utm_medium=web) for
 instructions about how to push Pub/Sub events to Cloud Run services.
 
-Besides Pub/Sub, Google Cloud Eventarc(in preview) allows you to trigger 
-Cloud Run from events that originate from Cloud Storage, BigQuery, Firestore
-and more than 60 other Google Cloud sources. 
-See [this blog post](https://cloud.google.com/blog/products/serverless/build-event-driven-applications-in-cloud-run?utm_campaign=CDR_ahm_aap-severless_cloud-run-faq_&utm_source=external&utm_medium=web) for detail.
+Besides Pub/Sub, Google Cloud Eventarc(in preview) allows you to trigger Cloud
+Run from events that originate from Cloud Storage, BigQuery, Firestore and more
+than 60 other Google Cloud sources. See [this blog
+post](https://cloud.google.com/blog/products/serverless/build-event-driven-applications-in-cloud-run?utm_campaign=CDR_ahm_aap-severless_cloud-run-faq_&utm_source=external&utm_medium=web)
+for detail.
+
+### Is Cloud Run good for running static websites?
+
+Potentially. Cloud Run has a generous [free tier][pricing] which can let you run
+your websites for free. However, if you have a static HTML website, using
+[Firebase
+Hosting](https://firebase.google.com/docs/hosting?utm_campaign=CDR_ahm_aap-severless_cloud-run-faq_&utm_source=external&utm_medium=web)
+or Google Cloud Storage buckets (behind Cloudflare for HTTPS+CDN) can also be
+similarly cheap or free.
+
+### How can I have cronjobs on Cloud Run?
+
+If you need to invoke your Cloud Run applications periodically, use
+[Google Cloud Scheduler](https://cloud.google.com/scheduler/?utm_campaign=CDR_ahm_aap-severless_cloud-run-faq_&utm_source=external&utm_medium=web). It can make a
+request to your application’s specific URL at an interval you specify.
+
+### Can I run a container only once on Cloud Run?
+
+Short answer: No. Cloud Run is not designed for this purpose.
+
+Sometimes you might have a container-based job (run-to-completion task) that
+might seem suitable for Cloud Run. However, Cloud Run is designed for running
+server apps (HTTP/gRPC etc).
+
+If you want to execute run-to-completion containers on-demand or periodically
+on Google Cloud Platform, you can [create a Compute Engine VM with a container](https://cloud.google.com/compute/docs/containers/deploying-containers?utm_campaign=CDR_ahm_aap-severless_cloud-run-faq_&utm_source=external&utm_medium=web).
 
 ### How to configure secrets for Cloud Run applications?
 
@@ -369,12 +419,6 @@ Alternatively, if you'd like to store secrets in Cloud Storage (GCS) using Cloud
 KMS envelope encryption, check out the
 [Berglas](https://github.com/GoogleCloudPlatform/berglas) tool and library
 (Berglas also has support for Secret Manager).
-
-### How can I have cronjobs on Cloud Run?
-
-If you need to invoke your Cloud Run applications periodically, use
-[Google Cloud Scheduler](https://cloud.google.com/scheduler/?utm_campaign=CDR_ahm_aap-severless_cloud-run-faq_&utm_source=external&utm_medium=web). It can make a
-request to your application’s specific URL at an interval you specify.
 
 ### Can I mount storage volumes or disks on Cloud Run?
 
@@ -505,11 +549,16 @@ it is independent of the image size.
 
 ### When will my service scale to zero?
 
-Cloud Run does not provide any guarantees on how long it will keep a service
-"warm". It depends on factors like capacity and Google’s implementation
-details.
+Cloud Run does not provide any guarantees on how long it will keep a container
+instance "warm". It depends on factors like capacity and Google’s implementation
+details. See: [How to keep a service
+"warm"?](#how-to-keep-a-cloud-run-service-warm).
 
 ### How do I minimize the cold start latencies?
+
+Cloud Run allows you to have a [specified number of warm instances][min-ins].
+These instances are billed differently, but they stick around to prevent
+cold starts.
 
 See [performance optimization
 tips](https://cloud.google.com/run/docs/tips?utm_campaign=CDR_ahm_aap-severless_cloud-run-faq_&utm_source=external&utm_medium=web#starting_services_quickly),
@@ -519,8 +568,9 @@ basically:
 - keep your app’s "time to listen for requests" startup time short
 - prevent your application process from crashing
 
-(The size of your container image has almost no impact on cold starts).
+The size of your container image has almost no impact on cold starts.
 
+[min-ins]: https://cloud.google.com/run/docs/configuring/min-instances?utm_campaign=CDR_ahm_aap-severless_cloud-run-faq_&utm_source=external&utm_medium=web#starting_services_quickly
 
 ### Do I get "warmup requests" like in App Engine?
 
@@ -536,29 +586,28 @@ the data you need to reduce cold start latencies.
 
 ### How to keep a Cloud Run service “warm”?
 
-You can work around "cold starts" by periodically making requests to your Cloud
-Run service which can help prevent the container instances from scaling to
-zero.
+Cloud Run now allows you to [keep a number of warm
+instances][min-ins]. Also called "minimum instances", Cloud Run keeps these
+container instances running so they're ready to serve requests.
 
-Use [Google Cloud Scheduler](https://cloud.google.com/scheduler?utm_campaign=CDR_ahm_aap-severless_cloud-run-faq_&utm_source=external&utm_medium=web) to make
-requests every few minutes.
+Such warm containers are [billed differently][pricing], however keeping a
+single 256 MB RAM / 1 vCPU container warm for a month costs around $8, which
+is still cheaper than the cheapest VM option (f1-micro).
+
+These warm containers still get their CPU throttled to ~0% when they are not
+processing requests.
+
+You can also work around "cold starts" by periodically making requests to your
+Cloud Run service which can help prevent the container instances from scaling to
+zero. For this, use [Google Cloud
+Scheduler](https://cloud.google.com/scheduler?utm_campaign=CDR_ahm_aap-severless_cloud-run-faq_&utm_source=external&utm_medium=web)
+to make requests every few minutes.
 
 ### How can I tell if a request was a “cold start”?
 
-> **UPDATE:** Cloud Run no longer marks request logs with information
-> about whether they caused a cold start or not.
-
-~~Each request to Cloud Run services is logged to Stackdriver logging, with an
-indicator whether instance was "warm" or "cold" during that request (see
-[Viewing Logs][logging]).~~
-
-[logging]: https://cloud.google.com/run/docs/logging?utm_campaign=CDR_ahm_aap-severless_cloud-run-faq_&utm_source=external&utm_medium=web
-
-~~If you view logs from Cloud Run console, these requests are marked (and if you
-view them in Stackdriver Logging, you can see the structured log label
-indicating "cold" request):~~
-
-![Cold Start Log](img/cold-start-log.png)
+Cloud Run does not mark request logs with information about whether they caused
+a cold start or not. However you can implement this yourself using a global
+variable.
 
 ## Container Lifecycle
 
@@ -622,7 +671,8 @@ also use [your domain names][custom-domains].
 ### Are all Cloud Run services publicly accessible?
 
 No. Cloud Run allows services to be either **publicly accessible** to anyone on
-the Internet, or **private services** that require [authentication].
+the Internet, or **private services** that require [authentication] via a
+JWT (identity token).
 
 [authentication]: https://cloud.google.com/run/docs/securing/authenticating?utm_campaign=CDR_ahm_aap-severless_cloud-run-faq_&utm_source=external&utm_medium=web
 
@@ -790,12 +840,12 @@ $ curl --http2 https://<url>
 
 ### Can my application server run on HTTP/2 protocol?
 
-HTTP/2 to the container is currently only supported for gRPC services. 
+HTTP/2 to the container is currently only supported for gRPC services.
 
 Cloud Run requires your application to serve on an **unencrypted** endpoint
 and HTTP/2 by default requires TLS.
 
-If your server supports HTTP/2 upgrade via the `h2c` (unencrypted HTTP/2) 
+If your server supports HTTP/2 upgrade via the `h2c` (unencrypted HTTP/2)
 protocol, it will safely fall-back to HTTP/1.1.
 
 If you develop an HTTP/2 **only** server, Cloud Run will
@@ -807,7 +857,7 @@ headers by default.
 Yes. Cloud Run (fully managed) can run [gRPC](https://grpc.io/) services with
 [server-streaming RPCs](https://grpc.io/docs/guides/concepts/#server-streaming-rpc)
 and send partial responses in a single request. Cloud Run also supports
-[unary (non-streaming) RPCs](https://grpc.io/docs/guides/concepts/#unary-rpc). 
+[unary (non-streaming) RPCs](https://grpc.io/docs/guides/concepts/#unary-rpc).
 
 Since [Cloud Run for Anthos][crogke] runs on GCE networking stack, gRPC works
 natively on that platform.
@@ -833,16 +883,36 @@ because of its GCE-based native networking layer.
 ### How do two Cloud Run services connect each other privately?
 
 To make requests to Cloud Run applications privately, you need to obtain an
-identity token, and add it to the Authorization header of the outbound request
+identity token, and add it to the `Authorization` header of the outbound request
 of the target service. You can find [documentation and examples
-here](https://cloud.google.com/run/docs/authenticating/service-to-service?utm_campaign=CDR_ahm_aap-severless_cloud-run-faq_&utm_source=external&utm_medium=web)
+here](https://cloud.google.com/run/docs/authenticating/service-to-service?utm_campaign=CDR_ahm_aap-severless_cloud-run-faq_&utm_source=external&utm_medium=web).
+
+For Cloud Run service A (running with service account `SA1`) to be able to
+connect to private Cloud Run service B, you need to:
+
+1. Update IAM permissions of service B to give `SA1` Cloud Run Invoker role
+   (`roles/run.invoker`).
+
+2. Obtain an identity token (JWT) from metadata service:
+
+    ```
+    curl -H "metadata-flavor: Google" \
+      http://metadata/instance/service-accounts/default/identity?audience=URL
+    ```
+    where `URL` is the URL of service B (i.e. `https://*.run.app`).
+
+3. Add header `Authentication: Bearer <TOKEN>` where `<TOKEN>` is the response
+   obtained in the previous command.
 
 ### Does Cloud Run have DNS service discovery?
 
 If you're using Kubernetes or similar systems, you might be used to calling
 another service directly by name (e.g. `http://hello/`). However, Cloud Run does
 not support this yet. Therefore you must use the full (`*.run.app`) URL.
-However, this is subject to change soon.
+
+Alternatively, you can try out the [runsd
+project](https://github.com/ahmetb/runsd), which is my prototype Cloud Run
+DNS Service Discovery + automatic authentication implementation.
 
 ## Autoscaling
 
@@ -985,9 +1055,9 @@ documentation][vpc-doc].
 
 ### Are VPC Service Controls supported for Cloud Run?
 
-[VPC-SC](https://cloud.google.com/vpc-service-controls?utm_campaign=CDR_ahm_aap-severless_cloud-run-faq_&utm_source=external&utm_medium=web) allows you to define
-which endpoints your applications can connect to (to prevent exfiltration
-risks).
+[VPC-SC](https://cloud.google.com/vpc-service-controls?utm_campaign=CDR_ahm_aap-severless_cloud-run-faq_&utm_source=external&utm_medium=web)
+allows you to define which endpoints your applications can connect to (to
+prevent exfiltration risks).
 
 However, Cloud Run applications currently cannot be placed inside a VPC network
 (see [above](#can-i-place-my-cloud-run-application-inside-a-vpc-network)),
@@ -1022,12 +1092,18 @@ view various metrics about your Cloud Run container instances.
 
 ### How can I do Tracing on Cloud Run?
 
-TODO(ahmetb): Write this section.
+Cloud Run supports tracing out of the box. If you go to "Tracing" section
+on Cloud Console, you will see the traces are being collected at
+a predefined sampling rate for your requests.
+
+If you want to correlate logs to requests, or create additional trace spans, you
+can use the `x-cloud-trace-context` header provided to each request with
+OpenTelemetry or OpenCensus libraries.
 
 ## Pricing
 
-> [Cloud Run Pricing documentation][pricing] has the most up-to-date
-> information.
+[Cloud Run Pricing documentation][pricing] has the most up-to-date
+information.
 
 [pricing]: https://cloud.google.com/run/pricing?utm_campaign=CDR_ahm_aap-severless_cloud-run-faq_&utm_source=external&utm_medium=web
 
@@ -1040,6 +1116,7 @@ Yes! See [Pricing documentation][pricing].
 You only pay **while a request is being handled** on your container instance.
 
 This means an application that is not getting traffic is **free of charge**.
+See the next question.
 
 ### How is billed time calculated?
 
@@ -1051,10 +1128,10 @@ Each billable timeslice is **rounded up** to the nearest **100
 milliseconds**.
 
 Read how the [billable
-time](https://cloud.google.com/run/pricing?utm_campaign=CDR_ahm_aap-severless_cloud-run-faq_&utm_source=external&utm_medium=web#billable_time) is calculated, it is
-basically like this:
+time](https://cloud.google.com/run/pricing?utm_campaign=CDR_ahm_aap-severless_cloud-run-faq_&utm_source=external&utm_medium=web#billable_time)
+is calculated, it is basically like this:
 
-```
+```text
           request1            response1
                 |   request2     ʌ      response2
                 |        |       |       ʌ
