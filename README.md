@@ -700,7 +700,7 @@ requests to be handled
 your container instances.
 
 Each container instance on Cloud Run is (currently) allowed to handle [up to
-80][lim] concurrent requests. This is also the default value.
+250][lim] concurrent requests. This is also the default value.
 
 ### What if my application can’t handle concurrent requests?
 
