@@ -1065,8 +1065,7 @@ therefore this feature is currently not available.
 
 ### Are "Shared VPCs" supported by VPC Access connector?
 
-[Currently
-not](https://cloud.google.com/vpc/docs/configure-serverless-vpc-access?utm_campaign=CDR_ahm_aap-severless_cloud-run-faq_&utm_source=external&utm_medium=web).
+[In Beta Stage](https://cloud.google.com/vpc/docs/configure-serverless-vpc-access#shared-vpc).
 
 ## Monitoring and Logging
 
