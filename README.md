@@ -156,10 +156,11 @@ handled.
 
 ### How is it different than App Engine Flexible?
 
-[GAE Flexible](https://cloud.google.com/appengine/docs/flexible/?utm_campaign=CDR_ahm_aap-severless_cloud-run-faq_&utm_source=external&utm_medium=web) and [Cloud
-Run][run] are very similar. They both accept container images as deployment input,
-they both auto-scale, and manage the infrastructure your code runs
-on for you. However:
+[GAE
+Flexible](https://cloud.google.com/appengine/docs/flexible/?utm_campaign=CDR_ahm_aap-severless_cloud-run-faq_&utm_source=external&utm_medium=web)
+and [Cloud Run][run] are very similar. They both accept container images as
+deployment input, they both auto-scale, and manage the infrastructure your code
+runs on for you. However:
 
 * GAE Flexible is built on VMs, therefore is slower to deploy and scale.
 * GAE Flexible does not scale to zero, at least 1 instance must be running.
@@ -814,7 +815,6 @@ However, the transit between Google’s frontend/load balancer and your Cloud Ru
 container instance is encrypted. Google terminates TLS/HTTPS connections before
 they reach your application, so that you don’t have to handle TLS yourself.
 
-
 ### Does Cloud Run support load balancing among multiple regions?
 
 Not natively. Cloud Run services are regional. But it's possible to do it
@@ -825,13 +825,17 @@ service to multiple regions and adding them behind the load balancer, the
 clients connecting to the load balancer IP/domain will be routed to the Cloud
 Run service **closest** Cloud Run service to the client.
 
+Read [documentation](https://cloud.google.com/run/docs/multiple-regions)
+or [my article](https://ahmet.im/blog/cloud-run-multi-region/) or
+[with Terraform](https://ahmet.im/blog/cloud-run-multi-region-terraform/).
+
 ### Is HTTP/2 supported on Cloud Run?
 
 Yes. Cloud Run’s gateway will upgrade any HTTP/1 server you write to HTTP/2. If
 you query your application with `https://`, you should be seeing HTTP/2 protocol
 used between the client and Cloud Run service:
 
-```
+```text
 $ curl --http2 https://<url>
 ...
 < HTTP/2 200
@@ -854,13 +858,10 @@ headers by default.
 
 ### Is gRPC supported on Cloud Run?
 
-Yes. Cloud Run (fully managed) can run [gRPC](https://grpc.io/) services with
-[server-streaming RPCs](https://grpc.io/docs/guides/concepts/#server-streaming-rpc)
-and send partial responses in a single request. Cloud Run also supports
-[unary (non-streaming) RPCs](https://grpc.io/docs/guides/concepts/#unary-rpc).
-
-Since [Cloud Run for Anthos][crogke] runs on GCE networking stack, gRPC works
-natively on that platform.
+Yes. Cloud Run (fully managed) can
+[now](https://cloud.google.com/blog/products/serverless/cloud-run-gets-websockets-http-2-and-grpc-bidirectional-streams)
+run [gRPC](https://grpc.io/) services, including all RPC types (unary,
+server-streaming, client-streaming and bidirectional).
 
 [crogke]: https://cloud.google.com/run/docs/gke/setup?utm_campaign=CDR_ahm_aap-severless_cloud-run-faq_&utm_source=external&utm_medium=web
 
@@ -872,11 +873,12 @@ if you know it will be larger than 32MB.
 
 ### Are WebSockets supported on Cloud Run?
 
-[WebSockets](https://en.wikipedia.org/wiki/WebSocket) are currently not
-supported on Cloud Run fully managed.
+[WebSockets](https://en.wikipedia.org/wiki/WebSocket) are
+[now](https://cloud.google.com/blog/products/serverless/cloud-run-gets-websockets-http-2-and-grpc-bidirectional-streams)
+supported on Cloud Run. [Read
+documentation](https://cloud.google.com/run/docs/triggering/websockets).
 
-However, running WebSockets currently works on [Cloud Run for Anthos][crogke]
-because of its GCE-based native networking layer.
+Running WebSockets also works on [Cloud Run for Anthos][crogke].
 
 ## Microservices
 
@@ -895,7 +897,7 @@ connect to private Cloud Run service B, you need to:
 
 2. Obtain an identity token (JWT) from metadata service:
 
-    ```
+    ```sh
     curl -H "metadata-flavor: Google" \
       http://metadata/instance/service-accounts/default/identity?audience=URL
     ```
@@ -1033,7 +1035,7 @@ private IP address to be accessible from only within the VPC (see
 
 ### How to connect IPs in a VPC network from Cloud Run?
 
-Cloud Run **now has [beta support][vpc-doc]** for "Serverless VPC Access". This
+Cloud Run **now has [support][vpc-doc]** for "Serverless VPC Access". This
 feature allows Cloud Run applications to be able to connect private IPs in the
 VPC (but not the other way).
 
