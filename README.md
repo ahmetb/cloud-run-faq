@@ -900,7 +900,7 @@ connect to private Cloud Run service B, you need to:
     ```
     where `URL` is the URL of service B (i.e. `https://*.run.app`).
 
-3. Add header `Authentication: Bearer <TOKEN>` where `<TOKEN>` is the response
+3. Add header `Authorization: Bearer <TOKEN>` where `<TOKEN>` is the response
    obtained in the previous command.
 
 ### Does Cloud Run have DNS service discovery?
