@@ -1075,7 +1075,7 @@ Anything your application writes to standard output (stdout) or standard error
 
 Some existing apps might not be complying with that (e.g. nginx writes logs to
 `/var/log/nginx/error.log`). Therefore any files written under `/var/log/*` are
-also aggregated. [Learn more here][logging].
+also aggregated. [Learn more here](https://cloud.google.com/run/docs/logging).
 
 ### How can I have structured logs?
 
