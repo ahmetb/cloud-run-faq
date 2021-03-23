@@ -1061,13 +1061,14 @@ documentation][vpc-doc].
 allows you to define which endpoints your applications can connect to (to
 prevent exfiltration risks).
 
-However, Cloud Run applications currently cannot be placed inside a VPC network
-(see [above](#can-i-place-my-cloud-run-application-inside-a-vpc-network)),
-therefore this feature is currently not available.
+You can use [Cloud Run with VPC service controls][vpc-sc] (currently in preview).
+
+[vpc-sc]:https://cloud.google.com/run/docs/securing/using-vpc-service-controls?utm_campaign=CDR_ahm_aap-severless_cloud-run-faq_&utm_source=external&utm_medium=web
 
 ### Are "Shared VPCs" supported by VPC Access connector?
 
-[In Beta Stage](https://cloud.google.com/vpc/docs/configure-serverless-vpc-access#shared-vpc).
+[In Beta
+Stage](https://cloud.google.com/vpc/docs/configure-serverless-vpc-access#shared-vpc).
 
 ## Monitoring and Logging
 
@@ -1078,7 +1079,9 @@ Anything your application writes to standard output (stdout) or standard error
 
 Some existing apps might not be complying with that (e.g. nginx writes logs to
 `/var/log/nginx/error.log`). Therefore any files written under `/var/log/*` are
-also aggregated. [Learn more here](https://cloud.google.com/run/docs/logging).
+also aggregated. [Learn more here.][logging]
+
+[logging]: https://cloud.google.com/run/docs/logging?utm_campaign=CDR_ahm_aap-severless_cloud-run-faq_&utm_source=external&utm_medium=web#special-fields
 
 ### How can I have structured logs?
 
@@ -1088,8 +1091,9 @@ such as `timestamp`, `severity`, `message`.
 
 ### Is Cloud Run integrated with Stackdriver APM?
 
-Yes. See [this document](https://cloud.google.com/run/docs/monitoring?utm_campaign=CDR_ahm_aap-severless_cloud-run-faq_&utm_source=external&utm_medium=web) on how to
-view various metrics about your Cloud Run container instances.
+Yes. See [this
+document](https://cloud.google.com/run/docs/monitoring?utm_campaign=CDR_ahm_aap-severless_cloud-run-faq_&utm_source=external&utm_medium=web)
+on how to view various metrics about your Cloud Run container instances.
 
 ### How can I do Tracing on Cloud Run?
 
