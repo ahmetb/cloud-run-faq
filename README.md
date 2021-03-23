@@ -778,12 +778,15 @@ You can also have CDN from other services if you don't want to use Cloud HTTP(S)
 ### Does Cloud Run offer SSL/TLS certificates (HTTPS)?
 
 Yes. If you’re using the domain name provided by Cloud Run (`*.run.app`), your
-application is immediately ready to serve on `https://` protocol.
+application is immediately ready to serve on `https://` protocol because Google
+has a wildcard TLS certificate for
+[`*.a.run.app`](https://crt.sh/?id=4260085120).
 
 If you’re using your own [custom domain] name, Cloud Run provisions a TLS
 certificate for your domain name. This may take ~15 minutes to provision and
-serve traffic on `https://`. Cloud Run uses [Let’s
-Encrypt](https://letsencrypt.org/) to get a certificate for your domains.
+serve traffic on `https://`. Cloud Run uses its own certificate authority named
+Google Trust Services to provision a certificate for your domain
+([example](https://crt.sh/?id=4221640439)).
 
 [custom domain]: https://cloud.google.com/run/docs/mapping-custom-domains?utm_campaign=CDR_ahm_aap-severless_cloud-run-faq_&utm_source=external&utm_medium=web
 
