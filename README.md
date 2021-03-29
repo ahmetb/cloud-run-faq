@@ -658,6 +658,7 @@ Cloud Run. (Upon customizing, `PORT` value will have the specified value.)
 ### What's the maximum request execution time limit?
 
 Currently, a request times out after **15 minutes**. See [limits][lim].
+(60-minute request timeouts are currently in preview.)
 
 ### Does my service get a domain name on Cloud Run?
 
@@ -1126,8 +1127,9 @@ See the next question.
 ### How is billed time calculated?
 
 Based on "time serving requests" on each instance. If your service handles
-multiple requests simultaneously, you do not pay for them separately. (This is a
-**cost saver!**)
+multiple requests simultaneously, you do not pay for the CPU/memory time during
+the overlap separately (per-request costs still apply). separately. (This is
+a cost saver, compared to Cloud Functions.)
 
 Each billable timeslice is **rounded up** to the nearest **100
 milliseconds**.
