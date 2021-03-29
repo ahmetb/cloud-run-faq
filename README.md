@@ -826,7 +826,7 @@ service to multiple regions and adding them behind the load balancer, the
 clients connecting to the load balancer IP/domain will be routed to the Cloud
 Run service **closest** Cloud Run service to the client.
 
-Read [documentation](https://cloud.google.com/run/docs/multiple-regions)
+Read [documentation](https://cloud.google.com/run/docs/multiple-regions?utm_campaign=CDR_ahm_aap-severless_cloud-run-faq_&utm_source=external&utm_medium=web)
 or [my article](https://ahmet.im/blog/cloud-run-multi-region/) or
 [with Terraform](https://ahmet.im/blog/cloud-run-multi-region-terraform/).
 
@@ -860,7 +860,7 @@ headers by default.
 ### Is gRPC supported on Cloud Run?
 
 Yes. Cloud Run (fully managed) can
-[now](https://cloud.google.com/blog/products/serverless/cloud-run-gets-websockets-http-2-and-grpc-bidirectional-streams)
+[now](https://cloud.google.com/blog/products/serverless/cloud-run-gets-websockets-http-2-and-grpc-bidirectional-streams?utm_campaign=CDR_ahm_aap-severless_cloud-run-faq_&utm_source=external&utm_medium=web)
 run [gRPC](https://grpc.io/) services, including all RPC types (unary,
 server-streaming, client-streaming and bidirectional).
 
@@ -875,9 +875,9 @@ if you know it will be larger than 32MB.
 ### Are WebSockets supported on Cloud Run?
 
 [WebSockets](https://en.wikipedia.org/wiki/WebSocket) are
-[now](https://cloud.google.com/blog/products/serverless/cloud-run-gets-websockets-http-2-and-grpc-bidirectional-streams)
+[now](https://cloud.google.com/blog/products/serverless/cloud-run-gets-websockets-http-2-and-grpc-bidirectional-streams?utm_campaign=CDR_ahm_aap-severless_cloud-run-faq_&utm_source=external&utm_medium=web)
 supported on Cloud Run. [Read
-documentation](https://cloud.google.com/run/docs/triggering/websockets).
+documentation](https://cloud.google.com/run/docs/triggering/websockets?utm_campaign=CDR_ahm_aap-severless_cloud-run-faq_&utm_source=external&utm_medium=web).
 
 Running WebSockets also works on [Cloud Run for Anthos][crogke].
 
@@ -1018,7 +1018,11 @@ as well.
 
 ### Is there a way to get static IP for outbound requests?
 
-Yes, this involves configuring a Cloud Router and Cloud NAT
+Yes. If you need to connect to an external API or database that requires IP
+address whitelisting, you can configure a static egress IP address for your
+Cloud Run service.
+
+This involves configuring a Cloud Router and Cloud NAT
 for a VPC network and using VPC connector with your Cloud Run service.
 Read [documentation](https://cloud.google.com/run/docs/configuring/connecting-vpc?utm_campaign=CDR_ahm_aap-severless_cloud-run-faq_&utm_source=external&utm_medium=web#egress)
 and [follow setup guide](https://cloud.google.com/run/docs/configuring/static-outbound-ip?utm_campaign=CDR_ahm_aap-severless_cloud-run-faq_&utm_source=external&utm_medium=web).
@@ -1069,7 +1073,7 @@ You can use [Cloud Run with VPC service controls][vpc-sc] (currently in preview)
 ### Are "Shared VPCs" supported by VPC Access connector?
 
 [In Beta
-Stage](https://cloud.google.com/vpc/docs/configure-serverless-vpc-access#shared-vpc).
+Stage](https://cloud.google.com/vpc/docs/configure-serverless-vpc-access?utm_campaign=CDR_ahm_aap-severless_cloud-run-faq_&utm_source=external&utm_medium=web#shared-vpc).
 
 ## Monitoring and Logging
 
