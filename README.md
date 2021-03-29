@@ -1128,7 +1128,7 @@ See the next question.
 
 Based on "time serving requests" on each instance. If your service handles
 multiple requests simultaneously, you do not pay for the CPU/memory time during
-the overlap separately (per-request costs still apply). separately. (This is
+the overlap separately (per-request costs still apply). (This is
 a cost saver, compared to Cloud Functions.)
 
 Each billable timeslice is **rounded up** to the nearest **100
