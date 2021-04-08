@@ -786,8 +786,8 @@ has a wildcard TLS certificate for
 If you’re using your own [custom domain] name, Cloud Run provisions a TLS
 certificate for your domain name. This may take ~15 minutes to provision and
 serve traffic on `https://`. Cloud Run uses its own certificate authority named
-Google Trust Services to provision a certificate for your domain
-([example](https://crt.sh/?id=4221640439)).
+Google Trust Services or [Let’s Encrypt](https://letsencrypt.org/) to provision
+a certificate for your domain ([example](https://crt.sh/?id=4221640439)).
 
 [custom domain]: https://cloud.google.com/run/docs/mapping-custom-domains?utm_campaign=CDR_ahm_aap-severless_cloud-run-faq_&utm_source=external&utm_medium=web
 
