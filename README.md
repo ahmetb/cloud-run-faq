@@ -681,10 +681,13 @@ Currently no. Cloud Run applications always have a `*.run.app` public hostname
 and they cannot be placed inside a VPC (Virtual Private Cloud) network.
 
 If any other private service (e.g. GCE VMs, GKE) needs to call your Cloud Run
-application, they need to use this public hostname. However, despite you’re
-making requests to public IP from a GCE VM in the same region (or possibly on
-cross-region if you're on  GCP Premium network tier), the traffic won’t leave
-Google’s own network.
+application, they need to use this public hostname.
+
+With [ingress settings](https://cloud.google.com/run/docs/securing/ingress) on
+Cloud Run, you can allow your app to be accesible only from the VPC (e.g. VMs or
+clusters) or VPC+Cloud Load Balancer –but it still does not give you a private
+IP.  You can still combine this with IAM to restrict the outside world but still
+authenticate and authorize other apps running the VPC network.
 
 ### How much additional latency does running on Cloud Run add?
 
@@ -753,7 +756,7 @@ already _load-balanced_? Yes, they are.
 
 However, GCLB offers a wide variety of options that you might need, such as:
 
-- Support for configuring GCLB products like Cloud CDN and Cloud Armor (Cloud IAP is not yet supported)
+- Support for configuring GCLB products like Cloud CDN, Cloud Armor and Cloud IAP
 - Routing to multiple backends (VM, GCS bucket, Run/GCF apps) on a single domain
 - Bringing your own certificates
 - Having a static IP (IPv4 or IPv6) for your domains
