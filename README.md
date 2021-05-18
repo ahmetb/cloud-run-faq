@@ -683,7 +683,7 @@ and they cannot be placed inside a VPC (Virtual Private Cloud) network.
 If any other private service (e.g. GCE VMs, GKE) needs to call your Cloud Run
 application, they need to use this public hostname.
 
-With [ingress settings](https://cloud.google.com/run/docs/securing/ingress) on
+With [ingress settings](https://cloud.google.com/run/docs/securing/ingress?utm_campaign=CDR_ahm_aap-severless_cloud-run-faq_&utm_source=external&utm_medium=web) on
 Cloud Run, you can allow your app to be accesible only from the VPC (e.g. VMs or
 clusters) or VPC+Cloud Load Balancer –but it still does not give you a private
 IP.  You can still combine this with IAM to restrict the outside world but still
@@ -882,7 +882,9 @@ if you know it will be larger than 32MB.
 supported on Cloud Run. [Read
 documentation](https://cloud.google.com/run/docs/triggering/websockets?utm_campaign=CDR_ahm_aap-severless_cloud-run-faq_&utm_source=external&utm_medium=web).
 
-Running WebSockets also works on [Cloud Run for Anthos][crogke].
+Since WebSockets requests are typically long-running, they will keep billing
+the container, and therefore can be more expensive. WebSockets requests are
+also subject to "request timeout" limits (i.e. they don't stay open forever).
 
 ## Microservices
 
