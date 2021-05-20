@@ -466,7 +466,9 @@ For other CI/CD systems, roughly the steps you should follow look like:
 ### Which container registries can I deploy from?
 
 Cloud Run currently only allows deploying images hosted on Google Container
-Registry (`*.gcr.io/*`).
+Registry (`*.gcr.io/*`) and Cloud Artifact Registry (`*.pkg.dev/*`).
+
+Deploying from external registries like Docker Hub are currently not supported.
 
 ### How can I deploy from other GCR registries?
 
