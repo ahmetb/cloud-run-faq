@@ -829,7 +829,7 @@ yourself.
 Using the [Cloud Load Balancer (GCLB)][setup-neg] integration, deploying your
 service to multiple regions and adding them behind the load balancer, the
 clients connecting to the load balancer IP/domain will be routed to the Cloud
-Run service **closest** Cloud Run service to the client.
+Run service **closest** to the client.
 
 Read [documentation](https://cloud.google.com/run/docs/multiple-regions?utm_campaign=CDR_ahm_aap-severless_cloud-run-faq_&utm_source=external&utm_medium=web)
 or [my article](https://ahmet.im/blog/cloud-run-multi-region/) or
