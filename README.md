@@ -704,7 +704,7 @@ requests to be handled
 your container instances.
 
 Each container instance on Cloud Run is (currently) allowed to handle [up to
-250][lim] concurrent requests. This is also the default value.
+250][lim] concurrent requests. The [default](https://cloud.google.com/run/docs/about-concurrency#concurrency_values) is 80.
 
 ### What if my application can’t handle concurrent requests?
 
