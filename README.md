@@ -659,8 +659,7 @@ Cloud Run. (Upon customizing, `PORT` value will have the specified value.)
 
 ### What's the maximum request execution time limit?
 
-Currently, a request times out after **15 minutes**. See [limits][lim].
-(60-minute request timeouts are currently in preview.)
+By default 5 minutes or up to 60 minutes, if configured. See [limits][lim].
 
 ### Does my service get a domain name on Cloud Run?
 
