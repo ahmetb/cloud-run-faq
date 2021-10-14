@@ -57,7 +57,6 @@
   * [Can Cloud Run receive events?](#can-cloud-run-receive-events)
   * [Is Cloud Run good for running static websites?](#is-cloud-run-good-for-running-static-websites)
   * [How can I have cronjobs on Cloud Run?](#how-can-i-have-cronjobs-on-cloud-run)
-  * [Can I run a container only once on Cloud Run?](#can-i-run-a-container-only-once-on-cloud-run)
   * [How to configure secrets for Cloud Run applications?](#how-to-configure-secrets-for-cloud-run-applications)
   * [Can I mount storage volumes or disks on Cloud Run?](#can-i-mount-storage-volumes-or-disks-on-cloud-run)
 - [Deploying](#deploying)
@@ -394,17 +393,6 @@ similarly cheap or free.
 If you need to invoke your Cloud Run applications periodically, use
 [Google Cloud Scheduler](https://cloud.google.com/scheduler/?utm_campaign=CDR_ahm_aap-severless_cloud-run-faq_&utm_source=external&utm_medium=web). It can make a
 request to your application’s specific URL at an interval you specify.
-
-### Can I run a container only once on Cloud Run?
-
-Short answer: No. Cloud Run is not designed for this purpose.
-
-Sometimes you might have a container-based job (run-to-completion task) that
-might seem suitable for Cloud Run. However, Cloud Run is designed for running
-server apps (HTTP/gRPC etc).
-
-If you want to execute run-to-completion containers on-demand or periodically
-on Google Cloud Platform, you can [create a Compute Engine VM with a container](https://cloud.google.com/compute/docs/containers/deploying-containers?utm_campaign=CDR_ahm_aap-severless_cloud-run-faq_&utm_source=external&utm_medium=web).
 
 ### How to configure secrets for Cloud Run applications?
 
