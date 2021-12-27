@@ -283,7 +283,7 @@ yourself.
 Sort of.
 
 Cloud Run implements most parts of the [Knative Serving
-API](https://www.knative.dev/docs/reference/serving-api/). However, the
+API](https://knative.dev/docs/reference/api/serving-api/). However, the
 underlying implementation of the functionality could differ from the open source
 [Knative][knative] implementation.
 
