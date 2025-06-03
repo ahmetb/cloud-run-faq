@@ -45,7 +45,7 @@
   * [How does it compare to AWS Fargate?](#how-does-it-compare-to-aws-fargate)
   * [How does it compare to AWS Lambda Container Image support?](#how-does-it-compare-to-aws-lambda-container-image-support)
   * [How does it compare to Azure Container Instances?](#how-does-it-compare-to-azure-container-instances)
-  * [What is "Cloud Run for Anthos"?](#what-is-cloud-run-for-anthos)
+  * [What is "Knative Serving on GKE"?](#what-is-cloud-run-for-anthos)
   * [Is Cloud Run a "hosted Knative"?](#is-cloud-run-a-hosted-knative)
 - [Developing Applications](#developing-applications)
   * [Which applications are suitable for Cloud Run?](#which-applications-are-suitable-for-cloud-run)
@@ -249,14 +249,14 @@ to zero. ACI is
 for long-running containers. Therefore, the pricing model is different. On Cloud
 Run, you only pay while a request is being handled.
 
-### What is "Cloud Run for Anthos"?
+### What is "Knative Serving on GKE"?
 
-["Cloud Run for Anthos"][crogke] gives you the same Cloud Run experience on your
+["Knative Serving on GKE"][crogke] gives you the same Cloud Run experience on your
 [Kubernetes](https://kubernetes.io) clusters on [Anthos] (either on GCP with
 [GKE], or on-prem/other clouds). This gives you the freedom to choose where you
 want to deploy your applications.
 
-"Cloud Run" and "Cloud Run for Anthos" are the same product, but running in
+"Cloud Run" and "Knative Serving on GKE" are the same product, but running in
 different places:
 
 * the same application format (container images)
@@ -269,7 +269,7 @@ how to choose between the two.
 
 ![](https://storage.googleapis.com/gweb-cloudblog-publish/images/developer_and_operator.0316026505360460.max-700x700.png)
 
-Cloud Run for Anthos basically installs and manages a Knative installation (with
+Knative Serving on GKE basically installs and manages a Knative installation (with
 some additional GCP-specific components for monitoring etc) on your Kubernetes
 cluster so that you don’t have to worry about installing and managing Knative
 yourself.
@@ -287,7 +287,7 @@ API](https://knative.dev/docs/reference/api/serving-api/). However, the
 underlying implementation of the functionality could differ from the open source
 [Knative][knative] implementation.
 
-With [Cloud Run for Anthos](#what-is-cloud-run-on-anthos), you actually get a
+With [Knative Serving on GKE](#what-is-cloud-run-on-anthos), you actually get a
 Knative installation (managed by Google) on your Kubernetes/[GKE] cluster
 
 ## Developing Applications
@@ -520,7 +520,7 @@ file and use the following command to deploy to Cloud Run:
 gcloud run services replace --platform=managed <file.yaml>
 ```
 
-Since "Cloud Run for Anthos" runs [Knative][knative] natively, you can use
+Since "Knative Serving on GKE" runs [Knative][knative] natively, you can use
 `kubectl` to deploy [Knative `Service`s][ksvc] to your GKE cluster by writing YAML
 manifests and running `kubectl apply`. See Knative tutorials for more info.
 
@@ -530,10 +530,8 @@ manifests and running `kubectl apply`. See Knative tutorials for more info.
 ### Can I use Terraform to deploy to Cloud Run?
 
 Yes. Terraform provides
-[resources](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/cloud_run_service)
-to define a Cloud Run deployment in Terraform. Also see [this blog
-post](https://www.sethvargo.com/configuring-cloud-run-with-terraform/) and
-[sample app](https://github.com/sethvargo/terraform-cloud-run-demo).
+[resources](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/cloud_run_v2_service)
+to define a Cloud Run deployment in Terraform.
 
 ## Cold Starts
 
@@ -577,7 +575,7 @@ The size of your container image has almost no impact on cold starts.
 Cloud Run does not have the notion of [App Engine warmup
 requests](https://cloud.google.com/appengine/docs/standard/python/configuring-warmup-requests?utm_campaign=CDR_ahm_aap-severless_cloud-run-faq_&utm_source=external&utm_medium=web).
 You can perform initialization of your application (such as loading data) until
-you start listening on the port number.
+you start listening on the port number or the startup probe completes.
 
 Note that delaying the listening on the port number causes longer _cold starts_,
 so consider [lazily
@@ -1019,7 +1017,7 @@ metadata](https://cloud.google.com/appengine/docs/standard/java/accessing-instan
 endpoints like
 `http://metadata.google.internal/computeMetadata/v1/project/project-id` to
 determine if you are on Cloud Run. However, this will not distinguish "Cloud
-Run" vs "Cloud Run for Anthos" as the metadata service is available on GKE nodes
+Run" vs "Knative Serving on GKE" as the metadata service is available on GKE nodes
 as well.
 
 ### Is there a way to get static IP for outbound requests?
